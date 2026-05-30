@@ -632,6 +632,142 @@ footer {
   outline: none;
 }
 .tweak-select option { background: #0a0a0a; }
+
+/* ─── PARALLAX STRIP ─── */
+.parallax-strip {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  margin: 40px 0;
+}
+.parallax-img {
+  position: absolute;
+  inset: -80px 0;
+  width: 100%;
+  height: calc(100% + 160px);
+  object-fit: cover;
+  will-change: transform;
+  filter: brightness(0.45) saturate(0.7);
+}
+.parallax-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(5,5,5,0.9));
+  display: flex;
+  align-items: flex-end;
+  padding: 40px 56px;
+}
+.parallax-caption {
+  font-family: var(--ff-serif);
+  font-style: italic;
+  font-size: clamp(22px, 2.8vw, 36px);
+  color: rgba(245,241,234,0.85);
+  max-width: 600px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+/* ─── WORK CARDS ─── */
+#work {
+  padding-top: 100px;
+  padding-bottom: 80px;
+}
+.work-label {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 48px;
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  perspective: 1200px;
+}
+.card-3d {
+  position: relative;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.4s ease;
+  will-change: transform;
+  background: #0d0d0d;
+}
+.card-3d:hover {
+  box-shadow: 0 30px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(125,211,252,0.12);
+}
+.card-img-wrap {
+  height: 240px;
+  overflow: hidden;
+}
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.75) saturate(0.8);
+  transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.card-3d:hover .card-img-wrap img {
+  filter: brightness(0.9) saturate(1);
+  transform: scale(1.05);
+}
+.card-body {
+  padding: 22px 24px 26px;
+  transform: translateZ(20px);
+  position: relative;
+  z-index: 2;
+}
+.card-tag {
+  font-family: var(--ff-sans);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+.card-title {
+  font-family: var(--ff-serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.card-desc {
+  font-family: var(--ff-sans);
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 10px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+.card-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 0%, rgba(125,211,252,0.07) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+.card-3d:hover .card-shine { opacity: 1; }
+
+/* ─── SCROLL 3D REVEAL ─── */
+.reveal-3d {
+  opacity: 0;
+  transform: perspective(900px) rotateX(18deg) translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-3d.visible {
+  opacity: 1;
+  transform: perspective(900px) rotateX(0deg) translateY(0);
+}
+
 </style>
 
 
@@ -660,6 +796,67 @@ footer {
     <h1 class="hero-headline">Every business is a world worth understanding deeply.</h1>
     <p class="hero-subhead">Sonder Project builds custom web and AI for businesses moving faster.</p>
   </section>
+
+
+  <!-- ─── PARALLAX STRIP 1 ─── -->
+  <div class="parallax-strip" id="parallax-1">
+    <img class="parallax-img" id="pimg-1"
+      src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&q=80&auto=format&fit=crop"
+      alt="Team working" loading="lazy">
+    <div class="parallax-overlay">
+      <p class="parallax-caption">We build the systems that let you focus on what matters.</p>
+    </div>
+  </div>
+
+  <!-- ─── WORK CARDS ─── -->
+  <section class="content-section" id="work">
+    <p class="work-label">What we build</p>
+    <div class="cards-grid">
+      <div class="card-3d reveal-3d">
+        <div class="card-shine"></div>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=75&auto=format&fit=crop" alt="Dashboard" loading="lazy">
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Web Platform</p>
+          <h3 class="card-title">Custom dashboards that surface what matters</h3>
+          <p class="card-desc">Real-time data, beautiful interfaces, zero bloat.</p>
+        </div>
+      </div>
+      <div class="card-3d reveal-3d" style="transition-delay:0.12s">
+        <div class="card-shine"></div>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=75&auto=format&fit=crop" alt="AI" loading="lazy">
+        </div>
+        <div class="card-body">
+          <p class="card-tag">AI Systems</p>
+          <h3 class="card-title">AI workflows wired directly into your operations</h3>
+          <p class="card-desc">From ingestion to action — automated end-to-end.</p>
+        </div>
+      </div>
+      <div class="card-3d reveal-3d" style="transition-delay:0.24s">
+        <div class="card-shine"></div>
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=75&auto=format&fit=crop" alt="Analytics" loading="lazy">
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Strategy + Build</p>
+          <h3 class="card-title">From clarity to launch in weeks, not quarters</h3>
+          <p class="card-desc">Senior engineers. Focused scope. Real speed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PARALLAX STRIP 2 ─── -->
+  <div class="parallax-strip" id="parallax-2">
+    <img class="parallax-img" id="pimg-2"
+      src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80&auto=format&fit=crop"
+      alt="Office" loading="lazy">
+    <div class="parallax-overlay">
+      <p class="parallax-caption">Great tools are invisible. You only notice the speed.</p>
+    </div>
+  </div>
 
   <section class="content-section" id="company-display">
     <div class="company-name-large">Sonder<br>Project</div>
@@ -1026,6 +1223,48 @@ window.addEventListener('message', e => {
   if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks-panel').style.display = 'none';
 });
 window.parent.postMessage({type: '__edit_mode_available'}, '*');
+
+
+
+// ─── 3D CARD TILT ─────────────────────────────────────────────────
+document.querySelectorAll('.card-3d').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(900px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg) translateZ(8px)`;
+    const shine = card.querySelector('.card-shine');
+    if (shine) shine.style.background = `radial-gradient(circle at ${(x+0.5)*100}% ${(y+0.5)*100}%, rgba(125,211,252,0.10) 0%, transparent 65%)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── PARALLAX ON SCROLL ───────────────────────────────────────────
+const parallaxItems = [
+  { img: document.getElementById('pimg-1'), strip: document.getElementById('parallax-1'), speed: 0.35 },
+  { img: document.getElementById('pimg-2'), strip: document.getElementById('parallax-2'), speed: 0.28 },
+].filter(p => p.img && p.strip);
+
+function updateParallax() {
+  parallaxItems.forEach(({ img, strip, speed }) => {
+    const r = strip.getBoundingClientRect();
+    const center = r.top + r.height / 2 - window.innerHeight / 2;
+    img.style.transform = `translateY(${center * speed}px)`;
+  });
+}
+window.addEventListener('scroll', updateParallax, { passive: true });
+window.addEventListener('resize', updateParallax);
+updateParallax();
+
+// ─── 3D SCROLL REVEAL ─────────────────────────────────────────────
+const obs3d = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs3d.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal-3d').forEach(el => obs3d.observe(el));
 
 // ─── INIT ──────────────────────────────────────────────────────────
 window.addEventListener('resize', () => { resizeCanvas(); });
