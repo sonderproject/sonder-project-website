@@ -497,8 +497,8 @@ body::before {
   z-index: 3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(62,155,212,0.10), transparent 70%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(62,155,212,0.05), transparent 60%);
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(62,155,212,0.06), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(62,155,212,0.03), transparent 60%);
 }
 body::after {
   content: '';
@@ -1589,9 +1589,9 @@ footer {
   <div class="tweak-row">
     <span class="tweak-label">Particle density</span>
     <select class="tweak-select" id="tweak-density" onchange="applyDensity(this.value)">
-      <option value="1200">Dense</option>
-      <option value="800" selected="">Medium</option>
-      <option value="400">Sparse</option>
+      <option value="1800">Dense</option>
+      <option value="1300" selected="">Medium</option>
+      <option value="700">Sparse</option>
     </select>
   </div>
   <div class="tweak-row">
@@ -1614,7 +1614,7 @@ footer {
 <script>
 // ─── CONFIG ────────────────────────────────────────────────────────
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "particleCount": 800,
+  "particleCount": 1300,
   "headlineStyle": "upright",
   "colorMode": "mixed"
 }/*EDITMODE-END*/;
@@ -1625,18 +1625,19 @@ let COLOR_MODE = TWEAK_DEFAULTS.colorMode;
 // ─── AMBIENT AURORA ORBS (background depth so it never feels empty) ───
 // Soft, slow-drifting nebula painted under the particles. Brand teal with
 // a touch of indigo + magenta for subtle iridescence (echoes the nav aurora).
+// pz = parallax depth (how far the orb sits "into" the screen)
 const auroraOrbs = [
-  { hue: '62,155,212',  bx: 0.20, by: 0.28, rad: 0.62, ax: 0.06, ay: 0.05, sx: 0.013, sy: 0.017, a: 0.11 },
-  { hue: '120,110,255', bx: 0.82, by: 0.20, rad: 0.52, ax: 0.07, ay: 0.06, sx: 0.011, sy: 0.009, a: 0.07 },
-  { hue: '64,205,224',  bx: 0.70, by: 0.74, rad: 0.66, ax: 0.05, ay: 0.07, sx: 0.009, sy: 0.013, a: 0.085 },
-  { hue: '255,120,170', bx: 0.30, by: 0.84, rad: 0.46, ax: 0.06, ay: 0.05, sx: 0.012, sy: 0.010, a: 0.05 },
+  { hue: '62,155,212',  bx: 0.20, by: 0.28, rad: 0.60, ax: 0.06, ay: 0.05, sx: 0.013, sy: 0.017, a: 0.060, pz: 26 },
+  { hue: '120,110,255', bx: 0.82, by: 0.20, rad: 0.50, ax: 0.07, ay: 0.06, sx: 0.011, sy: 0.009, a: 0.038, pz: 46 },
+  { hue: '64,205,224',  bx: 0.70, by: 0.74, rad: 0.64, ax: 0.05, ay: 0.07, sx: 0.009, sy: 0.013, a: 0.048, pz: 18 },
+  { hue: '255,120,170', bx: 0.30, by: 0.84, rad: 0.44, ax: 0.06, ay: 0.05, sx: 0.012, sy: 0.010, a: 0.028, pz: 60 },
 ];
 
-function drawAurora(t) {
+function drawAurora(t, px, py) {
   ctx.globalCompositeOperation = 'lighter';
   for (const o of auroraOrbs) {
-    const cx = (o.bx + Math.sin(t * o.sx + o.bx * 6) * o.ax) * W;
-    const cy = (o.by + Math.cos(t * o.sy + o.by * 6) * o.ay) * H;
+    const cx = (o.bx + Math.sin(t * o.sx + o.bx * 6) * o.ax) * W + px * o.pz;
+    const cy = (o.by + Math.cos(t * o.sy + o.by * 6) * o.ay) * H + py * o.pz;
     const rr = o.rad * Math.max(W, H);
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr);
     g.addColorStop(0, `rgba(${o.hue},${o.a})`);
@@ -1671,35 +1672,44 @@ function resizeCanvas() {
 let textPoints = [];
 
 function sampleTextPoints() {
-  const offscreen = document.createElement('canvas');
+  const twoLine = W < 680;                 // stack "Sonder" / "Project" on phones
   const tw = Math.min(W, 1200);
-  const th = Math.round(tw * 0.28);
+  const th = Math.round(twoLine ? tw * 0.5 : tw * 0.26);
+  const offscreen = document.createElement('canvas');
   offscreen.width = tw;
   offscreen.height = th;
   const oc = offscreen.getContext('2d');
-
-  // Draw "Sonder" on line 1, "Project" on line 2
-  const fontSize = Math.round(tw * 0.175);
   oc.fillStyle = '#fff';
-  oc.font = `600 ${fontSize}px 'Outfit', sans-serif`;
   oc.textAlign = 'center';
   oc.textBaseline = 'middle';
-  oc.fillText('Sonder Project', tw / 2, th / 2);
+
+  if (twoLine) {
+    const fs = Math.round(tw * 0.26);
+    oc.font = `600 ${fs}px 'Outfit', sans-serif`;
+    oc.fillText('Sonder', tw / 2, th * 0.32);
+    oc.fillText('Project', tw / 2, th * 0.70);
+  } else {
+    const fs = Math.round(tw * 0.175);
+    oc.font = `600 ${fs}px 'Outfit', sans-serif`;
+    oc.fillText('Sonder Project', tw / 2, th / 2);
+  }
 
   const imageData = oc.getImageData(0, 0, tw, th);
   const data = imageData.data;
   const pts = [];
   const stride = 2; // sample every N pixels for density control
 
+  // Uniform scale → no horizontal/vertical distortion (keeps the "S" clean)
+  const targetW = W * (twoLine ? 0.74 : 0.86);
+  const scale = targetW / tw;
+  const offsetX = (W - tw * scale) / 2;
+  const offsetY = H * (twoLine ? 0.40 : 0.42) - (th * scale) / 2;
+
   for (let y = 0; y < th; y += stride) {
     for (let x = 0; x < tw; x += stride) {
       const idx = (y * tw + x) * 4;
-      const alpha = data[idx + 3];
-      if (alpha > 80) {
-        // Map to screen coords — center the text block vertically
-        const screenX = (x / tw) * W * 0.92 + W * 0.04;
-        const screenY = (y / th) * (H * 0.35) + H * 0.32;
-        pts.push({ x: screenX, y: screenY });
+      if (data[idx + 3] > 80) {
+        pts.push({ x: x * scale + offsetX, y: y * scale + offsetY });
       }
     }
   }
@@ -1724,7 +1734,10 @@ function isTealParticle() {
 
 function mkParticle(i) {
   const isTeal = isTealParticle();
-  const r = Math.random() * 1.1 + 0.4;
+  // Depth gives the field a 3D feel: near particles are bigger, brighter,
+  // and parallax more; far ones are tiny specks. Smaller overall = premium.
+  const depth = Math.pow(Math.random(), 1.6);   // bias toward far/small
+  const r = 0.28 + depth * 0.72;                 // ~0.28–1.0 px
 
   // Star state — random scatter across screen
   const sx = Math.random() * W;
@@ -1749,7 +1762,7 @@ function mkParticle(i) {
   return {
     sx, sy, sdx, sdy, starAlpha, twinklePhase, twinkleFreq,
     tx, ty,
-    r, isTeal,
+    r, isTeal, depth,
     t: Math.random() * 1000,
     // Stagger delay: particles that are farther from text center arrive slightly later
     delay: Math.random() * 0.15,
@@ -1776,9 +1789,22 @@ function initReleaseVelocities() {
   });
 }
 
+// ─── 3D PARALLAX (window into another dimension) ───────────────────
+const isTouch = window.matchMedia('(hover: none)').matches || 'ontouchstart' in window;
+const isMobileViewport = () => window.innerWidth < 768;
+let pointerX = 0, pointerY = 0, targetPX = 0, targetPY = 0;
+if (!isTouch) {
+  window.addEventListener('pointermove', e => {
+    targetPX = (e.clientX / window.innerWidth - 0.5) * 2;   // -1 .. 1
+    targetPY = (e.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+}
+
 function initParticles() {
   releaseProgress = 0; targetReleaseProgress = 0; releaseInitialized = false;
-  particles = Array.from({ length: PARTICLE_COUNT }, (_, i) => mkParticle(i));
+  // Lighter field on phones for smooth performance
+  const count = isMobileViewport() ? Math.min(PARTICLE_COUNT, 750) : PARTICLE_COUNT;
+  particles = Array.from({ length: count }, (_, i) => mkParticle(i));
 }
 
 // ─── HELPERS ───────────────────────────────────────────────────────
@@ -1808,7 +1834,18 @@ function render(ts) {
   ctx.fillRect(0, 0, W, H);
   const sp = smoothstep(scrollProgress);
   const t = ts * 0.001;
-  drawAurora(t);
+
+  // Parallax pointer — on touch devices, drift gently on its own so the
+  // 3D "window into another dimension" still breathes without a mouse.
+  if (isTouch) {
+    targetPX = Math.sin(t * 0.18) * 0.6;
+    targetPY = Math.cos(t * 0.13) * 0.45;
+  }
+  pointerX += (targetPX - pointerX) * 0.04;
+  pointerY += (targetPY - pointerY) * 0.04;
+  const PARA = isMobileViewport() ? 16 : 34;   // max parallax shift (px) at depth 1
+
+  drawAurora(t, pointerX, pointerY);
 
   particles.forEach(p => {
     p.t += dt * 0.001;
@@ -1870,6 +1907,11 @@ function render(ts) {
       alpha = lerp(p.starAlpha * (0.55 + 0.45 * twinkle), 0.97, pp);
     }
 
+    // 3D parallax — depth-scaled, faded out once the wordmark is formed
+    const para = 1 - pp;
+    x += pointerX * PARA * p.depth * para;
+    y += pointerY * PARA * p.depth * para;
+
     // Color
     let colorStr;
     if (p.isTeal) {
@@ -1886,8 +1928,12 @@ function render(ts) {
     ctx.fillStyle = colorStr;
     ctx.fill();
 
-    // Subtle glow on larger particles
-    if (p.r > 0.6 && alpha > 0.2) {
+    // Subtle glow. Desktop: formed letters + brighter stars. Mobile: only the
+    // brighter formed letters glow, so the larger field stays smooth.
+    const glowOk = alpha > 0.2 && (isMobileViewport()
+      ? (formed && p.r > 0.62)
+      : (formed || p.r > 0.62));
+    if (glowOk) {
       const gr = drawR * (formed ? 5 : 3.5);
       const g = ctx.createRadialGradient(x, y, 0, x, y, gr);
       const gc = p.isTeal ? '62,155,212' : '255,255,255';
