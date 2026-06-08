@@ -1329,6 +1329,9 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   margin-top: 14px;
   text-align: center;
 }
+/* Hero + consulting-card micro align left to match their left-aligned content */
+.hero-actions + .cta-micro { text-align: left; margin-top: 18px; }
+.section-cta + .cta-micro { text-align: left; margin-top: 16px; }
 /* Stats proof line */
 .stats-proof {
   font-family: var(--ff-sans);
@@ -1755,7 +1758,8 @@ body.loaded #intro-veil {
   #hero-text { padding-top: 100px; }
   .hero-top { padding: 0 24px 56px; }
   .hero-headline { font-size: clamp(32px, 8.5vw, 46px); }
-  .hero-actions { gap: 18px; }
+  .hero-subhead { font-size: 15px; margin-bottom: 36px; }
+  .hero-actions { gap: 16px; }
 
   /* Company display */
   #company-display { padding-top: 60px; padding-bottom: 70px; }
@@ -1804,6 +1808,24 @@ body.loaded #intro-veil {
   /* Stack stats so the numbers stay large and legible */
   .stats-row { grid-template-columns: 1fr; gap: 10px; max-width: 340px; }
   .stat { padding: 22px 16px; }
+
+  /* Nav: collapse wordmark to just the mark so both CTA pills fit */
+  nav { padding: 16px 16px; }
+  nav.scrolled { padding: 13px 16px; }
+  .nav-logo-text { display: none; }
+  .nav-links { gap: 8px; }
+  .nav-studio-pill { padding: 8px 13px; font-size: 10px; letter-spacing: 0.06em; }
+  .nav-cta-pill { padding: 8px 13px; font-size: 10px; letter-spacing: 0.06em; }
+
+  /* Hero buttons go full-width and stack for easy thumb taps */
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; }
+  .btn-primary { text-align: center; }
+  .btn-ghost { justify-content: center; }
+  .hero-actions + .cta-micro { text-align: center; }
+
+  /* Final CTA + stats proof breathe a little less wide */
+  .stats-proof { font-size: 11px; padding: 0 8px; }
+  .cta-headline { font-size: clamp(28px, 8vw, 38px); }
 }
 </style>
 
@@ -1818,7 +1840,7 @@ body.loaded #intro-veil {
 <div id="cursor-glow"></div>
 
 <nav id="main-nav">
-  <a href="#" class="nav-logo"><img src="/logo-white.png" alt="Sonder Project" class="nav-logo-mark">Sonder Project</a>
+  <a href="#" class="nav-logo"><img src="/logo-white.png" alt="Sonder Project" class="nav-logo-mark"><span class="nav-logo-text">Sonder Project</span></a>
   <div class="nav-links">
     <a href="#studio-section" class="nav-link">Studio</a>
     <a href="#consulting-section" class="nav-link">Consulting</a>
