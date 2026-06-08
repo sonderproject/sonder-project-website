@@ -1398,6 +1398,88 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   padding-bottom: 40px;
   transition-delay: 0.15s;
 }
+/* ─── WHY A DESIGNER (AI objection handler) ─── */
+#why-design { padding-top: 70px; padding-bottom: 70px; }
+.why-headline {
+  font-family: var(--ff-display);
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 20px;
+  max-width: 760px;
+}
+.why-headline em { font-style: normal; color: var(--accent); }
+.why-intro {
+  max-width: 680px;
+  font-family: var(--ff-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-dim);
+  margin-bottom: 48px;
+}
+.why-intro strong { color: var(--text); font-weight: 500; }
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.why-card {
+  padding: 30px 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.why-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(62,155,212,0.24);
+  background: linear-gradient(135deg, rgba(62,155,212,0.08) 0%, rgba(255,255,255,0.02) 100%);
+}
+.why-num {
+  display: block;
+  font-family: var(--ff-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.why-card-title {
+  font-family: var(--ff-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+.why-card-desc {
+  font-family: var(--ff-sans);
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--text-dim);
+}
+.why-kicker {
+  margin-top: 40px;
+  padding: 28px 34px;
+  border-radius: 14px;
+  border: 1px solid rgba(62,155,212,0.22);
+  background: linear-gradient(135deg, rgba(62,155,212,0.10) 0%, rgba(62,155,212,0.02) 100%);
+  font-family: var(--ff-display);
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+.why-kicker strong { color: var(--accent); font-weight: 600; }
+
 .faq-list {
   display: grid;
   gap: 12px;
@@ -1899,6 +1981,11 @@ body.loaded #intro-veil {
   .seal-ring { width: 210px; height: 210px; }
   .seal-monogram { font-size: 120px; }
 
+  /* Why-a-designer — 3 cols down to 2 on tablet */
+  #why-design { padding-top: 52px; padding-bottom: 52px; }
+  .why-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .why-kicker { padding: 24px 26px; }
+
   /* Studio section — lead with the photo + hook on mobile */
   .studio-inner { padding: 60px 24px 80px; }
   .section-eyebrow { margin-bottom: 28px; }
@@ -1957,6 +2044,12 @@ body.loaded #intro-veil {
   .designer-chip { font-size: 10px; padding: 8px 13px; }
   .seal-ring { width: 180px; height: 180px; }
   .seal-monogram { font-size: 104px; }
+
+  /* Why-a-designer — single column on phones */
+  .why-grid { grid-template-columns: 1fr; }
+  .why-headline { font-size: clamp(24px, 7.5vw, 32px); }
+  .why-card { padding: 24px 22px; }
+  .why-kicker { font-size: 17px; padding: 22px 22px; }
 }
 </style>
 
@@ -2153,6 +2246,45 @@ body.loaded #intro-veil {
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="content-section" id="why-design">
+    <div class="section-eyebrow reveal">Why Not Just Use AI?</div>
+    <h2 class="why-headline reveal">AI can build a website. It can't <em>design</em> one that converts.</h2>
+    <p class="why-intro reveal">AI website builders are genuinely powerful — <strong>we use AI every day</strong>. But a tool is only as good as the hand that wields it. Point an AI builder at your business and it gives you exactly what it was trained on: clean, competent, and completely generic. Here's what it can't replicate — and why the difference shows up in your conversion rate.</p>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <span class="why-num">01</span>
+        <h3 class="why-card-title">Conversion is psychology, not decoration</h3>
+        <p class="why-card-desc">High-converting design understands the human on the other side of the screen — their hesitation, what earns their trust, where their eye travels, the exact moment they decide. AI arranges elements. It doesn't understand people.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-num">02</span>
+        <h3 class="why-card-title">AI regresses to the average</h3>
+        <p class="why-card-desc">It's trained on millions of existing sites, so it hands you a blend of all of them. Technically fine, instantly forgettable — the precise opposite of a premium brand built to stand apart.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-num">03</span>
+        <h3 class="why-card-title">Taste can't be prompted</h3>
+        <p class="why-card-desc">Knowing when to add and when to subtract, where to break the grid, what reads as cheap versus considered — that's judgment earned over years. AI has no point of view. A designer does.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-num">04</span>
+        <h3 class="why-card-title">Strategy comes before pixels</h3>
+        <p class="why-card-desc">Real work starts with your goals, your market, and your customer — then the design flows from that. An AI builder starts at a template and hopes it fits. The order matters more than people think.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-num">05</span>
+        <h3 class="why-card-title">You can't steer what you can't see</h3>
+        <p class="why-card-desc">Even with AI, you'd need to already know what high-converting looks like to direct it. Most people ship something that "works," quietly underperforms, and never find out why.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-num">06</span>
+        <h3 class="why-card-title">The last 20% is the whole game</h3>
+        <p class="why-card-desc">AI gets you to "good enough." The polish, the rhythm, the micro-interactions, the details — that final stretch is pure craft, and it's the entire difference between a site people tolerate and one they trust.</p>
+      </div>
+    </div>
+    <div class="why-kicker reveal">AI in a designer's hands is a superpower. In everyone else's, it's a template generator. <strong>We give you the first one.</strong></div>
   </section>
 
   <section class="content-section" id="faq">
