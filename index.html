@@ -13,8 +13,9 @@
 <link rel="canonical" href="https://www.sonderproject.co/">
 
 <!-- ─── ICONS ─── -->
-<link rel="icon" type="image/png" href="/logo-mark.png">
-<link rel="apple-touch-icon" href="/logo-mark.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <!-- ─── OPEN GRAPH (LinkedIn, iMessage, WhatsApp, Facebook) ─── -->
 <meta property="og:type" content="website">
@@ -22,17 +23,18 @@
 <meta property="og:title" content="Sonder Project — Premium Web Design & AI Studio">
 <meta property="og:description" content="Premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands. Home of Sonder Studio.">
 <meta property="og:url" content="https://www.sonderproject.co/">
-<meta property="og:image" content="https://www.sonderproject.co/pexels-joshsorenson-1154498.jpg">
-<meta property="og:image:width" content="1500">
-<meta property="og:image:height" content="1000">
-<meta property="og:image:alt" content="Sonder Project — premium digital experiences">
+<meta property="og:image" content="https://www.sonderproject.co/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sonder Project — Premium Web Design & AI Studio">
 <meta property="og:locale" content="en_US">
 
 <!-- ─── TWITTER / X ─── -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sonder Project — Premium Web Design & AI Studio">
 <meta name="twitter:description" content="Premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands. Home of Sonder Studio.">
-<meta name="twitter:image" content="https://www.sonderproject.co/pexels-joshsorenson-1154498.jpg">
+<meta name="twitter:image" content="https://www.sonderproject.co/og-image.png">
 
 <!-- ─── STRUCTURED DATA ─── -->
 <script type="application/ld+json">
@@ -46,7 +48,7 @@
       "url": "https://www.sonderproject.co/",
       "description": "Parent company building premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands.",
       "logo": "https://www.sonderproject.co/logo-mark.png",
-      "image": "https://www.sonderproject.co/pexels-joshsorenson-1154498.jpg",
+      "image": "https://www.sonderproject.co/og-image.png",
       "subOrganization": {
         "@type": "Organization",
         "name": "Sonder Studio",
@@ -68,6 +70,52 @@
       "description": "Premium web design and digital experiences for real estate agents, brokerages, and property companies.",
       "areaServed": "US",
       "serviceType": ["Web Design", "AI Integration", "Real Estate Marketing", "Brand Identity"]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.sonderproject.co/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Sonder Project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sonder Project is a digital studio and product company — the parent company behind Sonder Studio and a growing suite of digital products. We build premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Sonder Studio do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sonder Studio is our flagship service. We design and build high-performance websites and digital experiences for real estate agents, brokerages, and property companies — with scroll-driven animation, AI integration, and conversion-focused design."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who does Sonder Project work with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our phase-one focus is real estate professionals — agents, brokerages, and property companies who want a premium digital presence that stands out and converts. We also work with ambitious brands across other industries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What services does Sonder Project offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built with no templates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I start a project with Sonder Project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Book a call and we'll talk through your goals. We're selective about who we work with, so every engagement starts with a conversation to make sure it's the right fit."
+          }
+        }
+      ]
     }
   ]
 }
@@ -75,7 +123,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link rel="preload" as="image" href="/pexels-introspectivedsgn-16195404.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="/hero.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>/* latin-ext */
 @font-face {
@@ -950,6 +998,38 @@ nav.scrolled {
   letter-spacing: 0.03em;
 }
 
+/* ─── FAQ ─── */
+#faq {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  transition-delay: 0.15s;
+}
+.faq-list {
+  display: grid;
+  gap: 2px;
+}
+.faq-item {
+  padding: 28px 0;
+  border-top: 1px solid rgba(237,233,227,0.07);
+}
+.faq-item:last-child { border-bottom: 1px solid rgba(237,233,227,0.07); }
+.faq-q {
+  font-family: var(--ff-display);
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
+}
+.faq-a {
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 1.7;
+  max-width: 760px;
+}
+
 /* ─── CTA ─── */
 #cta {
   padding-top: 100px;
@@ -1196,7 +1276,7 @@ footer {
 
 <div id="hero-photo">
   <div class="hero-photo-inner">
-    <img src="/pexels-introspectivedsgn-16195404.jpg" alt="Sonder Project" />
+    <img src="/hero.webp" alt="Person capturing a coastal landscape on a phone — Sonder Project digital craft" width="2000" height="1333" />
     <div class="hero-photo-vignette"></div>
     <div class="hero-photo-text">
       <div class="hero-photo-label">Sonder Project</div>
@@ -1261,13 +1341,39 @@ footer {
           </a>
         </div>
         <div class="studio-card-visual">
-          <img src="/pexels-joshsorenson-1154498.jpg" alt="Sonder Studio" class="studio-visual-img" />
+          <img src="/studio.webp" alt="Aerial view of beachfront real estate at sunset — Sonder Studio web design for real estate" class="studio-visual-img" width="1800" height="1199" loading="lazy" />
           <div class="studio-visual-overlay"></div>
           <div class="studio-visual-copy">
             <div class="studio-visual-copy-headline">In real estate, the best-looking agent wins.</div>
             <div class="studio-visual-copy-sub">Let's make sure that's you.</div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="faq">
+    <div class="section-eyebrow">Frequently Asked</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3 class="faq-q">What is Sonder Project?</h3>
+        <p class="faq-a">Sonder Project is a digital studio and product company — the parent company behind Sonder Studio and a growing suite of digital products. We build premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">What does Sonder Studio do?</h3>
+        <p class="faq-a">Sonder Studio is our flagship service. We design and build high-performance websites and digital experiences for real estate agents, brokerages, and property companies — with scroll-driven animation, AI integration, and conversion-focused design.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Who does Sonder Project work with?</h3>
+        <p class="faq-a">Our phase-one focus is real estate professionals — agents, brokerages, and property companies who want a premium digital presence that stands out and converts. We also work with ambitious brands across other industries.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">What services do you offer?</h3>
+        <p class="faq-a">Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built — we don't use templates.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">How do I start a project with Sonder Project?</h3>
+        <p class="faq-a">Book a call and we'll talk through your goals. We're selective about who we work with, so every engagement starts with a conversation to make sure it's the right fit.</p>
       </div>
     </div>
   </section>
