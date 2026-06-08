@@ -648,19 +648,19 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   object-fit: cover;
   object-position: center 45%;
   display: block;
-  /* slight cinematic grade — calmer, darker, tilted toward the brand */
-  filter: saturate(0.92) contrast(1.03) brightness(0.82);
+  /* light cinematic grade — the photo stays present before scrolling */
+  filter: saturate(0.98) contrast(1.02) brightness(0.97);
 }
 .hero-photo-grade {
   position: absolute;
   inset: 0;
   background:
-    /* brand teal wash up top */
-    linear-gradient(180deg, rgba(62,155,212,0.12) 0%, rgba(10,10,9,0) 38%),
-    /* darken top + bottom so particles read and it melts into content */
-    linear-gradient(to bottom, rgba(10,10,9,0.62) 0%, rgba(10,10,9,0.30) 38%, rgba(10,10,9,0.78) 82%, rgba(10,10,9,0.96) 100%),
-    /* vignette every edge into pure black — no seam with the particle field */
-    radial-gradient(ellipse 92% 86% at 50% 46%, transparent 38%, rgba(10,10,9,0.92) 100%);
+    /* faint brand teal wash up top */
+    linear-gradient(180deg, rgba(62,155,212,0.08) 0%, rgba(10,10,9,0) 38%),
+    /* gentle top + stronger bottom darkening (for text + melt into content) */
+    linear-gradient(to bottom, rgba(10,10,9,0.30) 0%, rgba(10,10,9,0.08) 38%, rgba(10,10,9,0.62) 84%, rgba(10,10,9,0.95) 100%),
+    /* soft edge vignette — keeps the seam invisible without dimming the photo */
+    radial-gradient(ellipse 96% 90% at 50% 46%, transparent 52%, rgba(10,10,9,0.62) 100%);
 }
 
 /* Hero intro copy — its own layer ABOVE the particles so it stays crisp */
