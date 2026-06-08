@@ -1114,6 +1114,51 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   border-color: rgba(62,155,212,0.5);
   transform: translate(2px, -2px);
 }
+/* ─── Irresistible section CTA ─── */
+.section-cta {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  font-family: var(--ff-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #04121c;
+  background: linear-gradient(180deg, #7cc8f1 0%, var(--accent) 100%);
+  padding: 16px 40px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 28px rgba(62,155,212,0.4);
+  animation: ctaBreathe 3s ease-in-out infinite;
+  transition: transform 0.22s ease, filter 0.22s ease;
+  will-change: transform;
+}
+.section-cta .cta-label,
+.section-cta .cta-arrow { position: relative; z-index: 1; }
+.section-cta .cta-arrow { font-size: 15px; line-height: 1; transition: transform 0.25s ease; }
+.section-cta:hover { transform: translateY(-3px) scale(1.015); filter: brightness(1.06); }
+.section-cta:hover .cta-arrow { transform: translateX(4px); }
+.section-cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -130%;
+  width: 60%; height: 100%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  transform: skewX(-18deg);
+  animation: ctaSheen 4.2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes ctaBreathe {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 28px rgba(62,155,212,0.4); }
+  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 12px 44px rgba(62,155,212,0.72); }
+}
+@keyframes ctaSheen {
+  0% { left: -130%; }
+  55%, 100% { left: 150%; }
+}
 .studio-card-visual {
   position: relative;
   overflow: hidden;
@@ -1268,11 +1313,12 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   text-decoration: none;
   border-radius: 10px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 30px rgba(62,155,212,0.35);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  animation: ctaBreathe 3s ease-in-out infinite;
+  transition: transform 0.2s ease, filter 0.22s ease;
 }
 .cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 14px 44px rgba(62,155,212,0.55);
+  transform: translateY(-3px) scale(1.012);
+  filter: brightness(1.06);
 }
 
 /* ─── FOOTER ─── */
@@ -1450,6 +1496,8 @@ a:focus-visible, button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   #company-display::before { animation: none; }
   .btn-primary::after, .cta-btn::after, .nav-cta-pill::after { transition: none; }
+  .section-cta, .cta-btn { animation: none; }
+  .section-cta::after { animation: none; opacity: 0; }
 }
 
 /* ─── PAGE-LOAD INTRO VEIL ─── */
@@ -1777,9 +1825,9 @@ body.loaded #intro-veil {
             <span class="studio-tag">Real Estate</span>
             <span class="studio-tag">Brand Identity</span>
           </div>
-          <a href="https://sonderstudio.space" class="studio-visit-link" target="_blank">
-            Visit Sonder Studio
-            <span class="link-arrow">↗</span>
+          <a href="https://sonderstudio.space" class="section-cta" target="_blank">
+            <span class="cta-label">Visit Sonder Studio</span>
+            <span class="cta-arrow">↗</span>
           </a>
         </div>
         <div class="studio-card-visual">
@@ -1810,9 +1858,9 @@ body.loaded #intro-veil {
             <span class="studio-tag">Custom Tools</span>
             <span class="studio-tag">Workflow Design</span>
           </div>
-          <a href="https://cal.com/dante-valentino/ai-consulting" class="studio-visit-link" target="_blank">
-            Book a Consultation
-            <span class="link-arrow">↗</span>
+          <a href="https://cal.com/dante-valentino/ai-consulting" class="section-cta" target="_blank">
+            <span class="cta-label">Book a Consultation</span>
+            <span class="cta-arrow">↗</span>
           </a>
         </div>
         <div class="studio-card-visual">
