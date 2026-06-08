@@ -629,6 +629,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   height: 100%;
   z-index: 1;
   background: transparent;
+  opacity: 0;          /* hidden until scroll reveals the particles */
 }
 
 /* ─── HERO PHOTO (full-bleed cinematic backdrop, behind particles) ─── */
@@ -648,19 +649,19 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   object-fit: cover;
   object-position: center 45%;
   display: block;
-  /* light cinematic grade — the photo stays present before scrolling */
-  filter: saturate(0.98) contrast(1.02) brightness(0.97);
+  /* near-natural grade — the photo is fully present before scrolling */
+  filter: saturate(1) contrast(1.02) brightness(1);
 }
 .hero-photo-grade {
   position: absolute;
   inset: 0;
   background:
     /* faint brand teal wash up top */
-    linear-gradient(180deg, rgba(62,155,212,0.08) 0%, rgba(10,10,9,0) 38%),
-    /* gentle top + stronger bottom darkening (for text + melt into content) */
-    linear-gradient(to bottom, rgba(10,10,9,0.30) 0%, rgba(10,10,9,0.08) 38%, rgba(10,10,9,0.62) 84%, rgba(10,10,9,0.95) 100%),
+    linear-gradient(180deg, rgba(62,155,212,0.07) 0%, rgba(10,10,9,0) 40%),
+    /* very light top + stronger bottom darkening (for text + melt into content) */
+    linear-gradient(to bottom, rgba(10,10,9,0.16) 0%, rgba(10,10,9,0.04) 42%, rgba(10,10,9,0.58) 84%, rgba(10,10,9,0.95) 100%),
     /* soft edge vignette — keeps the seam invisible without dimming the photo */
-    radial-gradient(ellipse 96% 90% at 50% 46%, transparent 52%, rgba(10,10,9,0.62) 100%);
+    radial-gradient(ellipse 98% 92% at 50% 46%, transparent 58%, rgba(10,10,9,0.55) 100%);
 }
 
 /* Hero intro copy — its own layer ABOVE the particles so it stays crisp */
@@ -1992,6 +1993,8 @@ function onScroll() {
   if (heroPhoto) heroPhoto.style.opacity = heroPhotoFade;
   const heroIntro = document.getElementById('hero-intro');
   if (heroIntro) heroIntro.style.opacity = heroPhotoFade;
+  // Particles stay hidden on the untouched photo, then bloom in as you scroll
+  canvas.style.opacity = Math.min(1, targetScrollProgress * 3.5);
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
