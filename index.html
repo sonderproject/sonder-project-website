@@ -676,7 +676,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   object-position: center 45%;
   display: block;
   /* near-natural grade — the photo is fully present before scrolling */
-  filter: saturate(1) contrast(1.02) brightness(1);
+  filter: brightness(1);
 }
 .hero-photo-grade {
   position: absolute;
@@ -764,6 +764,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   height: 48px;
   background: linear-gradient(to bottom, rgba(62,155,212,0.7), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 .scroll-label {
   font-family: var(--ff-sans);
@@ -833,6 +834,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   background: var(--accent);
   animation: pulseDot 2.5s ease-in-out infinite;
   flex-shrink: 0;
+  will-change: transform, opacity;
 }
 .hero-headline {
   font-family: var(--ff-display);
@@ -1139,12 +1141,11 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.55),
     inset 0 -10px 20px rgba(62,155,212,0.12),
-    0 8px 30px rgba(62,155,212,0.28);
-  animation: ctaBreathe 3.4s ease-in-out infinite;
+    0 8px 32px rgba(62,155,212,0.32);
   transition: transform 0.22s ease, border-color 0.3s ease;
   will-change: transform;
 }
-/* iridescent rainbow tint */
+/* iridescent rainbow tint — opacity pulses for the breathing glow (opacity-only = compositor-friendly) */
 .section-cta::before {
   content: '';
   position: absolute;
@@ -1153,8 +1154,8 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   background: linear-gradient(90deg,
     #ff5f9e, #ff9966, #ffe66d, #5cffb1, #3E9BD4, #9b7bff, #ff5f9e);
   background-size: 300% 100%;
-  animation: auroraShift 9s linear infinite;
-  opacity: 0.20;
+  animation: auroraShift 9s linear infinite, ctaGlowPulse 3.4s ease-in-out infinite;
+  opacity: 0.18;
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -1162,35 +1163,25 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 .section-cta .cta-arrow { position: relative; z-index: 1; }
 .section-cta .cta-arrow { font-size: 15px; line-height: 1; transition: transform 0.25s ease; }
 .section-cta:hover { transform: translateY(-3px) scale(1.015); border-color: rgba(255,255,255,0.42); }
-.section-cta:hover::before { opacity: 0.34; }
+.section-cta:hover::before { opacity: 0.36; }
 .section-cta:hover .cta-arrow { transform: translateX(4px); }
 .section-cta::after {
   content: '';
   position: absolute;
-  top: 0; left: -130%;
+  top: 0; left: 0;
   width: 60%; height: 100%;
   background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
-  transform: skewX(-18deg);
   animation: ctaSheen 4.2s ease-in-out infinite;
   pointer-events: none;
 }
-@keyframes ctaBreathe {
-  0%, 100% {
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.55),
-      inset 0 -10px 20px rgba(62,155,212,0.12),
-      0 8px 30px rgba(62,155,212,0.28);
-  }
-  50% {
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,0.6),
-      inset 0 -10px 20px rgba(62,155,212,0.20),
-      0 12px 44px rgba(62,155,212,0.55);
-  }
+/* Breathing glow — animates opacity only (GPU compositor path, no paint) */
+@keyframes ctaGlowPulse {
+  0%, 100% { opacity: 0.18; }
+  50% { opacity: 0.36; }
 }
 @keyframes ctaSheen {
-  0% { left: -130%; }
-  55%, 100% { left: 150%; }
+  0% { transform: translateX(-220%) skewX(-18deg); }
+  55%, 100% { transform: translateX(250%) skewX(-18deg); }
 }
 .studio-card-visual {
   position: relative;
@@ -1353,8 +1344,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.55),
     inset 0 -10px 20px rgba(62,155,212,0.12),
-    0 8px 30px rgba(62,155,212,0.28);
-  animation: ctaBreathe 3.4s ease-in-out infinite;
+    0 8px 32px rgba(62,155,212,0.32);
   transition: transform 0.2s ease, border-color 0.3s ease;
 }
 .cta-btn::before {
@@ -1365,8 +1355,8 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   background: linear-gradient(90deg,
     #ff5f9e, #ff9966, #ffe66d, #5cffb1, #3E9BD4, #9b7bff, #ff5f9e);
   background-size: 300% 100%;
-  animation: auroraShift 9s linear infinite;
-  opacity: 0.20;
+  animation: auroraShift 9s linear infinite, ctaGlowPulse 3.4s ease-in-out infinite;
+  opacity: 0.18;
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -1375,7 +1365,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   transform: translateY(-3px) scale(1.012);
   border-color: rgba(255,255,255,0.42);
 }
-.cta-btn:hover::before { opacity: 0.34; }
+.cta-btn:hover::before { opacity: 0.36; }
 
 /* ─── FOOTER ─── */
 footer {
@@ -1539,20 +1529,19 @@ a:focus-visible, button:focus-visible {
 .btn-primary::after, .cta-btn::after, .nav-cta-pill::after {
   content: '';
   position: absolute;
-  top: 0; left: -130%;
+  top: 0; left: 0;
   width: 55%; height: 100%;
   background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%);
-  transform: skewX(-18deg);
-  transition: left 0.65s cubic-bezier(0.4,0,0.2,1);
+  transform: translateX(-240%) skewX(-18deg);
+  transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
   pointer-events: none;
 }
 .btn-primary:hover::after, .cta-btn:hover::after, .nav-cta-pill:hover::after {
-  left: 135%;
+  transform: translateX(240%) skewX(-18deg);
 }
 @media (prefers-reduced-motion: reduce) {
   #company-display::before { animation: none; }
   .btn-primary::after, .cta-btn::after, .nav-cta-pill::after { transition: none; }
-  .section-cta, .cta-btn { animation: none; }
   .section-cta::after { animation: none; opacity: 0; }
   .section-cta::before, .cta-btn::before { animation: none; }
 }
@@ -2261,6 +2250,7 @@ function render(ts) {
   // Aurora fades IN as the hero photo fades out, so it never muddies the photo
   drawAurora(t, pointerX, pointerY, 1 - heroPhotoFade * 0.9);
 
+  const glowQueue = [];
   particles.forEach(p => {
     p.t += dt * 0.001;
 
@@ -2342,24 +2332,35 @@ function render(ts) {
     ctx.fillStyle = colorStr;
     ctx.fill();
 
-    // Subtle glow. Desktop: formed letters + brighter stars. Mobile: only the
-    // brighter formed letters glow, so the larger field stays smooth.
+    // Queue glowing particles for a single batched shadowBlur pass below —
+    // avoids creating a RadialGradient object per particle per frame.
     const glowOk = alpha > 0.2 && (isMobileViewport()
       ? (formed && p.r > 0.62)
       : (formed || p.r > 0.62));
     if (glowOk) {
-      const gr = drawR * (formed ? 5 : 3.5);
-      const g = ctx.createRadialGradient(x, y, 0, x, y, gr);
-      const gc = p.isTeal ? '62,155,212' : '255,255,255';
-      const glowAlpha = formed ? alpha * 0.55 : alpha * 0.25;
-      g.addColorStop(0, `rgba(${gc},${glowAlpha})`);
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.beginPath();
-      ctx.arc(x, y, gr, 0, Math.PI * 2);
-      ctx.fillStyle = g;
-      ctx.fill();
+      glowQueue.push({ x, y, drawR, isTeal: p.isTeal,
+        glowAlpha: formed ? alpha * 0.55 : alpha * 0.25, formed });
     }
   });
+
+  // Glow pass — GPU-native shadowBlur instead of per-particle RadialGradient
+  if (glowQueue.length) {
+    ctx.save();
+    glowQueue.forEach(({ x, y, drawR, isTeal, glowAlpha, formed }) => {
+      ctx.shadowBlur = drawR * (formed ? 10 : 7);
+      ctx.shadowColor = isTeal
+        ? `rgba(62,155,212,${glowAlpha})`
+        : `rgba(255,255,255,${glowAlpha})`;
+      ctx.fillStyle = isTeal
+        ? `rgba(62,155,212,${glowAlpha * 0.6})`
+        : `rgba(255,255,255,${glowAlpha * 0.6})`;
+      ctx.beginPath();
+      ctx.arc(x, y, drawR, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.shadowBlur = 0;
+    ctx.restore();
+  }
 
   requestAnimationFrame(render);
 }
@@ -2515,7 +2516,11 @@ window.addEventListener('message', e => {
 window.parent.postMessage({type: '__edit_mode_available'}, '*');
 
 // ─── INIT ──────────────────────────────────────────────────────────
-window.addEventListener('resize', () => { resizeCanvas(); });
+let _resizeTid;
+window.addEventListener('resize', () => {
+  clearTimeout(_resizeTid);
+  _resizeTid = setTimeout(resizeCanvas, 150);
+});
 
 // Page-load intro veil — hold briefly so the mark animation reads, then fade
 function dismissIntro() {
