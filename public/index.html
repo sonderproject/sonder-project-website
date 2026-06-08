@@ -440,6 +440,9 @@ nav.scrolled {
   height: 58vh;
   border-radius: 6px;
   overflow: hidden;
+}
+.hero-photo-inner img,
+.hero-photo-vignette {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
 }
@@ -1036,21 +1039,56 @@ footer {
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
-  nav { padding: 20px 28px; }
-  nav.scrolled { padding: 16px 28px; }
-  .nav-links { gap: 20px; }
+  nav { padding: 18px 22px; }
+  nav.scrolled { padding: 14px 22px; }
+  .nav-links { gap: 16px; }
   .nav-link { display: none; }
-  .content-section { padding: 0 28px; }
-  #hero-text { padding-top: 110px; }
-  .hero-top { padding: 0 28px 52px; }
-  .hero-image-wrap { padding: 0 28px; }
-  .hero-image-frame { height: 44vh; }
-  .studio-inner { padding: 60px 28px 80px; }
+  .nav-cta-pill { padding: 9px 18px; }
+  .content-section { padding: 0 24px; }
+
+  /* Hero photo */
+  .hero-photo-inner { width: 90%; height: 56vh; }
+  .hero-photo-text { left: 26px; right: 26px; bottom: 11%; }
+  .hero-photo-headline { font-size: clamp(26px, 7vw, 38px); }
+  .hero-photo-sub { font-size: 12px; }
+
+  /* Hero text */
+  #hero-text { padding-top: 100px; }
+  .hero-top { padding: 0 24px 56px; }
+  .hero-headline { font-size: clamp(32px, 8.5vw, 46px); }
+  .hero-actions { gap: 18px; }
+
+  /* Company display */
+  #company-display { padding-top: 60px; padding-bottom: 70px; }
+
+  /* Studio section — lead with the photo + hook on mobile */
+  .studio-inner { padding: 60px 24px 80px; }
+  .section-eyebrow { margin-bottom: 28px; }
   .studio-card { grid-template-columns: 1fr; }
-  .studio-card-visual { display: none; }
-  .studio-card-body { padding: 40px 32px; }
-  footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 28px; }
+  .studio-card-visual {
+    display: block;
+    min-height: 0;
+    height: 300px;
+    order: -1;
+    border-left: none;
+    border-bottom: 1px solid rgba(62,155,212,0.08);
+  }
+  .studio-visual-copy { bottom: 28px; left: 28px; right: 28px; }
+  .studio-visual-copy-headline { font-size: clamp(20px, 5.5vw, 26px); }
+  .studio-card-body { padding: 36px 28px; gap: 30px; }
+
+  /* CTA */
+  #cta { padding-top: 70px; padding-bottom: 130px; }
+
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 24px; }
   .footer-left { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 480px) {
+  .hero-photo-inner { width: 92%; height: 54vh; }
+  .hero-photo-headline { font-size: clamp(24px, 8vw, 32px); }
+  .studio-card-visual { height: 260px; }
+  .btn-primary, .btn-ghost { font-size: 10px; }
 }
 </style>
 
