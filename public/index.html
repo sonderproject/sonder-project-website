@@ -2,9 +2,10 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sonder Project</title>
+<title>Sonder Project — The Digital Ecosystem</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>/* latin-ext */
 @font-face {
   font-family: 'Bebas Neue';
@@ -326,18 +327,21 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #000000;
-  --accent: #7dd3fc;
-  --text: #f5f1ea;
-  --text-dim: rgba(245,241,234,0.45);
-  --ff-serif: 'Fraunces', serif;
+  --bg: #0A0A09;
+  --accent: #3E9BD4;
+  --accent-rgb: 62,155,212;
+  --text: #EDE9E3;
+  --text-dim: rgba(237,233,227,0.52);
+  --text-subtle: rgba(237,233,227,0.22);
+  --ff-display: 'Outfit', sans-serif;
   --ff-sans: 'Inter', sans-serif;
+  --radius: 4px;
 }
 
 html { scroll-behavior: auto; }
 
 body {
-  background: #000;
+  background: var(--bg);
   color: var(--text);
   font-family: var(--ff-sans);
   overflow-x: hidden;
@@ -353,28 +357,60 @@ nav {
   justify-content: space-between;
   padding: 28px 56px;
   pointer-events: none;
+  transition: background 0.45s ease, backdrop-filter 0.45s ease,
+              -webkit-backdrop-filter 0.45s ease, border-color 0.45s ease, padding 0.3s ease;
+  border-bottom: 1px solid transparent;
 }
-.nav-logo {
-  font-family: var(--ff-serif);
-  font-size: 17px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: 0.02em;
-  text-decoration: none;
+nav.scrolled {
+  background: rgba(10,10,9,0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(62,155,212,0.12);
+  padding: 18px 56px;
   pointer-events: all;
 }
-.nav-cta {
+.nav-logo {
+  font-family: var(--ff-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  pointer-events: all;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  pointer-events: all;
+}
+.nav-link {
   font-family: var(--ff-sans);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
-  color: var(--accent);
+  color: var(--text-dim);
   text-decoration: none;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: opacity 0.2s;
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--text); }
+.nav-cta-pill {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: #000;
+  background: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 9px 22px;
+  border-radius: 2px;
+  transition: opacity 0.2s, transform 0.2s;
   pointer-events: all;
 }
-.nav-cta:hover { opacity: 0.6; }
+.nav-cta-pill:hover { opacity: 0.85; transform: translateY(-1px); }
 
 /* ─── PARTICLE CANVAS ─── */
 #particle-canvas {
@@ -383,7 +419,7 @@ nav {
   width: 100%;
   height: 100%;
   z-index: 0;
-  background: #000;
+  background: var(--bg);
 }
 
 /* ─── SCROLL DRIVER ─── */
@@ -411,7 +447,7 @@ nav {
 .scroll-line {
   width: 1px;
   height: 48px;
-  background: linear-gradient(to bottom, rgba(125,211,252,0.7), transparent);
+  background: linear-gradient(to bottom, rgba(62,155,212,0.7), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 .scroll-label {
@@ -419,12 +455,16 @@ nav {
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(125,211,252,0.35);
+  color: rgba(62,155,212,0.35);
 }
 
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.4; transform: scaleY(1); }
   50% { opacity: 1; transform: scaleY(1.15); }
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.65); }
 }
 
 /* ─── CONTENT ─── */
@@ -447,35 +487,153 @@ nav {
   transform: translateY(0);
 }
 
-/* Hero text */
+/* ─── HERO ─── */
 #hero-text {
-  padding-top: 120px;
-  padding-bottom: 110px;
+  padding-top: 140px;
+  padding-bottom: 120px;
   transition-delay: 0s;
+  max-width: 1100px;
+}
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 80px;
+  align-items: center;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 32px;
+}
+.hero-badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulseDot 2.5s ease-in-out infinite;
+  flex-shrink: 0;
 }
 .hero-headline {
-  font-family: var(--ff-serif);
-  font-size: clamp(40px, 4.8vw, 68px);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.15;
+  font-family: var(--ff-display);
+  font-size: clamp(38px, 4.2vw, 62px);
+  font-weight: 600;
+  line-height: 1.08;
   color: var(--text);
-  max-width: 800px;
-  margin-bottom: 30px;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
   text-wrap: pretty;
-  letter-spacing: -0.01em;
 }
 .hero-subhead {
   font-family: var(--ff-sans);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 300;
   color: var(--text-dim);
-  line-height: 1.65;
-  max-width: 420px;
+  line-height: 1.74;
+  max-width: 410px;
+  margin-bottom: 48px;
   letter-spacing: 0.01em;
 }
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #000;
+  background: var(--accent);
+  padding: 14px 32px;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.btn-ghost:hover { color: var(--text); }
+.btn-ghost .arrow-icon { transition: transform 0.2s; }
+.btn-ghost:hover .arrow-icon { transform: translateX(3px); }
 
-/* Company name display */
+/* Hero image */
+.hero-image-frame {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(62,155,212,0.14);
+}
+.hero-placeholder-bg {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse at 35% 25%, rgba(62,155,212,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse at 75% 75%, rgba(62,155,212,0.06) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(10,10,9,0.5) 0%, rgba(10,10,9,0.92) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.hero-placeholder-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(62,155,212,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,155,212,0.045) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.hero-placeholder-text {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(62,155,212,0.22);
+  position: relative;
+  z-index: 1;
+}
+.hero-image-tag {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(237,233,227,0.35);
+  background: rgba(10,10,9,0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(237,233,227,0.08);
+}
+
+/* ─── COMPANY DISPLAY ─── */
 #company-display {
   padding-top: 80px;
   padding-bottom: 100px;
@@ -483,91 +641,278 @@ nav {
   overflow: hidden;
 }
 .company-name-large {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(80px, 14vw, 200px);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--text);
-  letter-spacing: 0.04em;
+  letter-spacing: -0.02em;
   line-height: 0.9;
   text-transform: uppercase;
   opacity: 0.92;
   user-select: none;
 }
 
-/* CTA */
+/* ─── STUDIO SECTION ─── */
+#studio-section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1s ease 0.12s, transform 1s ease 0.12s;
+}
+#studio-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.studio-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 80px 56px 120px;
+}
+.section-eyebrow {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 36px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 22px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+.studio-card {
+  border: 1px solid rgba(62,155,212,0.13);
+  border-radius: 6px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: rgba(62,155,212,0.02);
+}
+.studio-card-body {
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 36px;
+}
+.studio-card-label {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 16px;
+}
+.studio-card-name {
+  font-family: var(--ff-display);
+  font-size: clamp(26px, 2.8vw, 44px);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.studio-card-desc {
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-dim);
+  line-height: 1.74;
+  max-width: 360px;
+}
+.studio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.studio-tag {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(62,155,212,0.7);
+  border: 1px solid rgba(62,155,212,0.22);
+  padding: 5px 12px;
+  border-radius: 2px;
+}
+.studio-visit-link {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: color 0.2s;
+}
+.studio-visit-link:hover { color: var(--accent); }
+.studio-visit-link .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; height: 32px;
+  border: 1px solid rgba(62,155,212,0.28);
+  border-radius: 50%;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+}
+.studio-visit-link:hover .link-arrow {
+  background: rgba(62,155,212,0.1);
+  border-color: rgba(62,155,212,0.5);
+  transform: translate(2px, -2px);
+}
+.studio-card-visual {
+  position: relative;
+  overflow: hidden;
+  background: rgba(10,10,9,0.4);
+  border-left: 1px solid rgba(62,155,212,0.08);
+  min-height: 480px;
+}
+.studio-visual-inner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 60% 35%, rgba(62,155,212,0.11) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 75%, rgba(62,155,212,0.05) 0%, transparent 50%);
+  position: absolute;
+  inset: 0;
+}
+.studio-visual-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(62,155,212,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(62,155,212,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.studio-visual-label {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(62,155,212,0.2);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── CTA ─── */
 #cta {
-  padding-top: 80px;
+  padding-top: 100px;
   padding-bottom: 180px;
   text-align: center;
   max-width: 100%;
   transition-delay: 0.2s;
 }
+.cta-eyebrow {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-bottom: 24px;
+}
 .cta-headline {
-  font-family: var(--ff-serif);
-  font-size: clamp(30px, 3.2vw, 50px);
-  font-weight: 400;
+  font-family: var(--ff-display);
+  font-size: clamp(30px, 3.5vw, 54px);
+  font-weight: 600;
   color: var(--text);
-  margin-bottom: 44px;
-  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+.cta-sub {
+  font-family: var(--ff-sans);
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--text-dim);
+  max-width: 380px;
+  margin: 0 auto 48px;
+  line-height: 1.68;
 }
 .cta-btn {
   display: inline-block;
   font-family: var(--ff-sans);
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text);
-  border: 1px solid var(--accent);
-  padding: 15px 48px;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: color 0.3s ease;
-}
-.cta-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
+  color: #000;
   background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.32s cubic-bezier(0.4,0,0.2,1);
+  padding: 16px 52px;
+  text-decoration: none;
+  border-radius: var(--radius);
+  transition: opacity 0.2s, transform 0.2s;
 }
-.cta-btn:hover::before { transform: scaleX(1); }
-.cta-btn:hover { color: #000; }
-.cta-btn span { position: relative; z-index: 1; }
+.cta-btn:hover { opacity: 0.85; transform: translateY(-1px); }
 
-/* Footer */
+/* ─── FOOTER ─── */
 footer {
-  border-top: 1px solid rgba(245,241,234,0.05);
-  padding: 30px 56px;
+  border-top: 1px solid rgba(237,233,227,0.05);
+  padding: 32px 56px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 10;
 }
-.footer-logo {
-  font-family: var(--ff-serif);
-  font-size: 14px;
-  font-weight: 300;
-  color: rgba(245,241,234,0.2);
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }
+.footer-logo {
+  font-family: var(--ff-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+}
+.footer-link {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(237,233,227,0.2);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--text-dim); }
 .footer-copy {
   font-family: var(--ff-sans);
   font-size: 11px;
-  color: rgba(245,241,234,0.15);
+  color: rgba(237,233,227,0.15);
   letter-spacing: 0.03em;
 }
 
-/* Tweaks panel */
+/* ─── TWEAKS PANEL ─── */
 #tweaks-panel {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: rgba(10,10,10,0.95);
-  border: 1px solid rgba(125,211,252,0.18);
+  background: rgba(10,10,9,0.95);
+  border: 1px solid rgba(62,155,212,0.18);
   border-radius: 10px;
   padding: 20px 22px;
   z-index: 9998;
@@ -581,7 +926,7 @@ footer {
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(245,241,234,0.35);
+  color: rgba(237,233,227,0.35);
   margin-bottom: 16px;
   font-weight: 500;
 }
@@ -596,20 +941,20 @@ footer {
 .tweak-label {
   font-family: var(--ff-sans);
   font-size: 12px;
-  color: rgba(245,241,234,0.7);
+  color: rgba(237,233,227,0.7);
   font-weight: 300;
 }
 .tweak-toggle {
   width: 34px; height: 18px;
-  background: rgba(125,211,252,0.1);
+  background: rgba(62,155,212,0.1);
   border-radius: 9px;
   cursor: pointer;
   position: relative;
   transition: background 0.2s;
-  border: 1px solid rgba(125,211,252,0.2);
+  border: 1px solid rgba(62,155,212,0.2);
   flex-shrink: 0;
 }
-.tweak-toggle.on { background: rgba(125,211,252,0.35); }
+.tweak-toggle.on { background: rgba(62,155,212,0.35); }
 .tweak-toggle::after {
   content: '';
   position: absolute;
@@ -621,8 +966,8 @@ footer {
 }
 .tweak-toggle.on::after { transform: translateX(16px); }
 .tweak-select {
-  background: rgba(125,211,252,0.06);
-  border: 1px solid rgba(125,211,252,0.18);
+  background: rgba(62,155,212,0.06);
+  border: 1px solid rgba(62,155,212,0.18);
   color: var(--text);
   font-family: var(--ff-sans);
   font-size: 11px;
@@ -631,17 +976,36 @@ footer {
   cursor: pointer;
   outline: none;
 }
-.tweak-select option { background: #0a0a0a; }
+.tweak-select option { background: #0a0a09; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  nav { padding: 20px 28px; }
+  nav.scrolled { padding: 16px 28px; }
+  .nav-links { gap: 20px; }
+  .nav-link { display: none; }
+  .content-section { padding: 0 28px; }
+  #hero-text { padding-top: 110px; padding-bottom: 80px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { display: none; }
+  .studio-inner { padding: 60px 28px 80px; }
+  .studio-card { grid-template-columns: 1fr; }
+  .studio-card-visual { display: none; }
+  .studio-card-body { padding: 40px 32px; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 28px 28px; }
+  .footer-left { flex-direction: column; gap: 12px; }
+}
 </style>
 
 
 </head><body>
 
-<nav>
+<nav id="main-nav">
   <a href="#" class="nav-logo">Sonder Project</a>
-  <div style="display:flex;gap:32px;align-items:center;pointer-events:all;">
-    <a href="#" class="nav-cta">Downloads</a>
-    <a href="https://cal.com" class="nav-cta" target="_blank">Book a call</a>
+  <div class="nav-links">
+    <a href="#studio-section" class="nav-link">Studio</a>
+    <a href="#cta" class="nav-link">Contact</a>
+    <a href="https://cal.com/sonderproject" class="nav-cta-pill" target="_blank">Book a Call</a>
   </div>
 </nav>
 
@@ -657,21 +1021,86 @@ footer {
 
 <div id="content">
   <section class="content-section" id="hero-text">
-    <h1 class="hero-headline">Every business is a world worth understanding deeply.</h1>
-    <p class="hero-subhead">Sonder Project builds custom web and AI for businesses moving faster.</p>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          The Sonder Ecosystem
+        </div>
+        <h1 class="hero-headline">Building Digital Worlds for Ambitious Brands</h1>
+        <p class="hero-subhead">Sonder Project is the parent company behind Sonder Studio and a growing suite of digital products. Premium web experiences, AI integrations, and digital assets — built for businesses that refuse to be ordinary.</p>
+        <div class="hero-actions">
+          <a href="#studio-section" class="btn-primary">Explore Our Work</a>
+          <a href="https://cal.com/sonderproject" class="btn-ghost" target="_blank">
+            Book a Call
+            <svg class="arrow-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-image-frame">
+          <div class="hero-placeholder-bg">
+            <div class="hero-placeholder-grid"></div>
+            <span class="hero-placeholder-text">Photo Coming Soon</span>
+          </div>
+          <div class="hero-image-tag">Sonder Project — 2026</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="content-section" id="company-display">
     <div class="company-name-large">Sonder<br>Project</div>
   </section>
 
+  <section id="studio-section">
+    <div class="studio-inner">
+      <div class="section-eyebrow">Our Flagship Service</div>
+      <div class="studio-card">
+        <div class="studio-card-body">
+          <div>
+            <div class="studio-card-label">Sonder Studio · sonderstudio.space</div>
+            <div class="studio-card-name">Premium Web &amp; Digital Experiences</div>
+            <p class="studio-card-desc">Sonder Studio crafts high-performance websites and digital experiences for real estate professionals, luxury brands, and ambitious businesses. Scroll-driven animations, AI integrations, and pixel-perfect design — built to convert.</p>
+          </div>
+          <div class="studio-tags">
+            <span class="studio-tag">Web Design</span>
+            <span class="studio-tag">AI Integration</span>
+            <span class="studio-tag">Real Estate</span>
+            <span class="studio-tag">Brand Identity</span>
+          </div>
+          <a href="https://sonderstudio.space" class="studio-visit-link" target="_blank">
+            Visit Sonder Studio
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+        <div class="studio-card-visual">
+          <div class="studio-visual-inner">
+            <div class="studio-visual-grid"></div>
+            <span class="studio-visual-label">Preview Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="content-section" id="cta">
-    <h2 class="cta-headline">Let's find out what's possible.</h2>
-    <a href="https://cal.com" class="cta-btn" target="_blank"><span>Book a call</span></a>
+    <div class="cta-eyebrow">Let's Work Together</div>
+    <h2 class="cta-headline">Ready to Build Something Extraordinary?</h2>
+    <p class="cta-sub">Whether it's a website, an AI tool, or a complete digital presence — let's find out what's possible.</p>
+    <a href="https://cal.com/sonderproject" class="cta-btn" target="_blank">Book a Call</a>
   </section>
 
   <footer>
-    <div class="footer-logo">Sonder Project</div>
+    <div class="footer-left">
+      <div class="footer-logo">Sonder Project</div>
+      <div class="footer-links">
+        <a href="https://sonderstudio.space" class="footer-link" target="_blank">Sonder Studio</a>
+        <a href="#cta" class="footer-link">Contact</a>
+      </div>
+    </div>
     <div class="footer-copy">© 2026 Sonder Project</div>
   </footer>
 </div>
@@ -707,7 +1136,7 @@ footer {
 // ─── CONFIG ────────────────────────────────────────────────────────
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "particleCount": 400,
-  "headlineStyle": "italic",
+  "headlineStyle": "upright",
   "colorMode": "mixed"
 }/*EDITMODE-END*/;
 
@@ -747,7 +1176,7 @@ function sampleTextPoints() {
   // Draw "Sonder" on line 1, "Project" on line 2
   const fontSize = Math.round(tw * 0.175);
   oc.fillStyle = '#fff';
-  oc.font = `300 ${fontSize}px 'Fraunces', serif`;
+  oc.font = `600 ${fontSize}px 'Outfit', sans-serif`;
   oc.textAlign = 'center';
   oc.textBaseline = 'middle';
   oc.fillText('Sonder Project', tw / 2, th / 2);
@@ -870,7 +1299,7 @@ function render(ts) {
   scrollProgress += (targetScrollProgress - scrollProgress) * 0.05;
   releaseProgress += (targetReleaseProgress - releaseProgress) * 0.03;
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = '#000';
+  ctx.fillStyle = '#0A0A09';
   ctx.fillRect(0, 0, W, H);
   const sp = smoothstep(scrollProgress);
   const t = ts * 0.001;
@@ -938,7 +1367,7 @@ function render(ts) {
     // Color
     let colorStr;
     if (p.isTeal) {
-      colorStr = `rgba(125,211,252,${alpha})`;
+      colorStr = `rgba(62,155,212,${alpha})`;
     } else {
       colorStr = `rgba(255,255,255,${alpha})`;
     }
@@ -953,7 +1382,7 @@ function render(ts) {
     if (p.r > 0.7 && alpha > 0.2) {
       const gr = p.r * (pp > 0.999 ? 4.5 : 3.5);
       const g = ctx.createRadialGradient(x, y, 0, x, y, gr);
-      const gc = p.isTeal ? '125,211,252' : '255,255,255';
+      const gc = p.isTeal ? '62,155,212' : '255,255,255';
       const glowAlpha = pp > 0.999 ? alpha * 0.45 : alpha * 0.25;
       g.addColorStop(0, `rgba(${gc},${glowAlpha})`);
       g.addColorStop(1, 'rgba(0,0,0,0)');
@@ -978,7 +1407,11 @@ function onScroll() {
   scrollHint.style.opacity = Math.max(0, 1 - targetScrollProgress * 5);
   if (targetScrollProgress > 0.88) {
     sections.forEach(s => s.classList.add('visible'));
+    const studio = document.getElementById('studio-section');
+    if (studio) studio.classList.add('visible');
   }
+  const nav = document.getElementById('main-nav');
+  if (nav) nav.classList.toggle('scrolled', window.scrollY > 32);
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
@@ -998,6 +1431,15 @@ const obs = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.15 });
 sections.forEach(s => obs.observe(s));
+
+// Studio section reveal
+const studioSection = document.getElementById('studio-section');
+if (studioSection) {
+  const studioObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  studioObs.observe(studioSection);
+}
 
 // ─── TWEAKS ────────────────────────────────────────────────────────
 function applyDensity(val) {
@@ -1030,17 +1472,19 @@ window.parent.postMessage({type: '__edit_mode_available'}, '*');
 // ─── INIT ──────────────────────────────────────────────────────────
 window.addEventListener('resize', () => { resizeCanvas(); });
 
-// Wait for Fraunces font to load before sampling, for accurate text pixels
+// Wait for Outfit font to load before sampling, for accurate text pixels
 if (document.fonts) {
   document.fonts.ready.then(() => {
     resizeCanvas();
     initParticles();
     requestAnimationFrame(render);
+    onScroll();
   });
 } else {
   resizeCanvas();
   initParticles();
   requestAnimationFrame(render);
+  onScroll();
 }
 </script>
 
