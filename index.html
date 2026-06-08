@@ -627,57 +627,57 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  background: var(--bg);
+  z-index: 1;
+  background: transparent;
 }
 
-/* ─── HERO PHOTO (fixed, initial viewport) ─── */
+/* ─── HERO PHOTO (full-bleed cinematic backdrop, behind particles) ─── */
 #hero-photo {
   position: fixed;
   inset: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  z-index: 0;                 /* behind the transparent particle canvas */
+  overflow: hidden;
   pointer-events: none;
   transition: opacity 0.1s linear;
 }
-.hero-photo-inner {
-  position: relative;
-  width: 88%;
-  max-width: 1100px;
-  height: 58vh;
-  border-radius: 6px;
-  overflow: hidden;
-}
-.hero-photo-inner img,
-.hero-photo-vignette {
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-}
-.hero-photo-inner img {
+#hero-photo img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 45%;
   display: block;
+  /* slight cinematic grade — calmer, darker, tilted toward the brand */
+  filter: saturate(0.92) contrast(1.03) brightness(0.82);
 }
-.hero-photo-vignette {
+.hero-photo-grade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 35%,
-    rgba(10,10,9,0.55) 70%,
-    rgba(10,10,9,0.88) 100%
-  );
+  background:
+    /* brand teal wash up top */
+    linear-gradient(180deg, rgba(62,155,212,0.12) 0%, rgba(10,10,9,0) 38%),
+    /* darken top + bottom so particles read and it melts into content */
+    linear-gradient(to bottom, rgba(10,10,9,0.62) 0%, rgba(10,10,9,0.30) 38%, rgba(10,10,9,0.78) 82%, rgba(10,10,9,0.96) 100%),
+    /* vignette every edge into pure black — no seam with the particle field */
+    radial-gradient(ellipse 92% 86% at 50% 46%, transparent 38%, rgba(10,10,9,0.92) 100%);
+}
+
+/* Hero intro copy — its own layer ABOVE the particles so it stays crisp */
+#hero-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+  transition: opacity 0.1s linear;
 }
 .hero-photo-text {
-  position: absolute;
-  bottom: 14%;
-  left: 44px;
-  right: 44px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 56px 16vh;
 }
 .hero-photo-label {
   font-family: 'Inter', sans-serif;
@@ -1362,11 +1362,11 @@ footer {
   .nav-cta-pill { padding: 9px 18px; }
   .content-section { padding: 0 24px; }
 
-  /* Hero photo */
-  .hero-photo-inner { width: 90%; height: 56vh; }
-  .hero-photo-text { left: 26px; right: 26px; bottom: 11%; }
+  /* Hero photo (full-bleed) */
+  .hero-photo-text { padding: 0 24px 18vh; }
   .hero-photo-headline { font-size: clamp(26px, 7vw, 38px); }
   .hero-photo-sub { font-size: 12px; }
+  #hero-photo img { object-position: center 42%; }
 
   /* Hero text */
   #hero-text { padding-top: 100px; }
@@ -1401,7 +1401,7 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .hero-photo-inner { width: 92%; height: 54vh; }
+  .hero-photo-text { padding: 0 22px 16vh; }
   .hero-photo-headline { font-size: clamp(24px, 8vw, 32px); }
   .studio-card-visual { height: 260px; }
   .btn-primary, .btn-ghost { font-size: 10px; }
@@ -1425,14 +1425,15 @@ footer {
 <canvas id="particle-canvas"></canvas>
 
 <div id="hero-photo">
-  <div class="hero-photo-inner">
-    <img src="/hero.webp" alt="Aerial view of a coastal city marina at golden hour — Sonder Project premium digital studio" width="2000" height="1200" />
-    <div class="hero-photo-vignette"></div>
-    <div class="hero-photo-text">
-      <div class="hero-photo-label">Sonder Project</div>
-      <div class="hero-photo-headline">Not everyone gets here.<br><em>You do.</em></div>
-      <div class="hero-photo-sub">We're selective about who we build for.</div>
-    </div>
+  <img src="/hero.webp" alt="Aerial view of a coastal city marina at golden hour — Sonder Project premium digital studio" width="2000" height="1200" />
+  <div class="hero-photo-grade"></div>
+</div>
+
+<div id="hero-intro">
+  <div class="hero-photo-text">
+    <div class="hero-photo-label">Sonder Project</div>
+    <div class="hero-photo-headline">Not everyone gets here.<br><em>You do.</em></div>
+    <div class="hero-photo-sub">We're selective about who we build for.</div>
   </div>
 </div>
 
@@ -1633,15 +1634,17 @@ const auroraOrbs = [
   { hue: '255,120,170', bx: 0.30, by: 0.84, rad: 0.44, ax: 0.06, ay: 0.05, sx: 0.012, sy: 0.010, a: 0.028, pz: 60 },
 ];
 
-function drawAurora(t, px, py) {
+function drawAurora(t, px, py, intensity) {
+  if (intensity <= 0.01) return;
   ctx.globalCompositeOperation = 'lighter';
   for (const o of auroraOrbs) {
     const cx = (o.bx + Math.sin(t * o.sx + o.bx * 6) * o.ax) * W + px * o.pz;
     const cy = (o.by + Math.cos(t * o.sy + o.by * 6) * o.ay) * H + py * o.pz;
     const rr = o.rad * Math.max(W, H);
+    const a = o.a * intensity;
     const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr);
-    g.addColorStop(0, `rgba(${o.hue},${o.a})`);
-    g.addColorStop(0.6, `rgba(${o.hue},${o.a * 0.35})`);
+    g.addColorStop(0, `rgba(${o.hue},${a})`);
+    g.addColorStop(0.6, `rgba(${o.hue},${a * 0.35})`);
     g.addColorStop(1, `rgba(${o.hue},0)`);
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, W, H);
@@ -1836,15 +1839,16 @@ function getRawScrollProgress() {
 let scrollProgress = 0;
 let targetScrollProgress = 0;
 let lastTime = 0;
+let heroPhotoFade = 1;   // 1 = backdrop fully visible, 0 = dissolved
 
 function render(ts) {
   const dt = Math.min(ts - lastTime, 50);
   lastTime = ts;
   scrollProgress += (targetScrollProgress - scrollProgress) * 0.05;
   releaseProgress += (targetReleaseProgress - releaseProgress) * 0.03;
+  // Transparent canvas — the full-bleed hero photo (and black body) show
+  // through behind the particles, so we only clear, never paint black.
   ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = '#0A0A09';
-  ctx.fillRect(0, 0, W, H);
   const sp = smoothstep(scrollProgress);
   const t = ts * 0.001;
 
@@ -1858,7 +1862,8 @@ function render(ts) {
   pointerY += (targetPY - pointerY) * 0.04;
   const PARA = isMobileViewport() ? 16 : 34;   // max parallax shift (px) at depth 1
 
-  drawAurora(t, pointerX, pointerY);
+  // Aurora fades IN as the hero photo fades out, so it never muddies the photo
+  drawAurora(t, pointerX, pointerY, 1 - heroPhotoFade * 0.9);
 
   particles.forEach(p => {
     p.t += dt * 0.001;
@@ -1981,8 +1986,12 @@ function onScroll() {
   }
   const nav = document.getElementById('main-nav');
   if (nav) nav.classList.toggle('scrolled', window.scrollY > 32);
+  // Dissolve the cinematic backdrop + intro copy as the wordmark forms
+  heroPhotoFade = Math.max(0, 1 - targetScrollProgress * 2.8);
   const heroPhoto = document.getElementById('hero-photo');
-  if (heroPhoto) heroPhoto.style.opacity = Math.max(0, 1 - targetScrollProgress * 2.8);
+  if (heroPhoto) heroPhoto.style.opacity = heroPhotoFade;
+  const heroIntro = document.getElementById('hero-intro');
+  if (heroIntro) heroIntro.style.opacity = heroPhotoFade;
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
