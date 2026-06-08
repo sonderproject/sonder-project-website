@@ -142,6 +142,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="preload" as="image" href="/hero.webp" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 <style>/* latin-ext */
 @font-face {
   font-family: 'Bebas Neue';
@@ -1007,6 +1008,120 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 }
 
 /* ─── STUDIO SECTION ─── */
+/* ─── THE DESIGNER ─── */
+#designer-section { padding-top: 64px; padding-bottom: 64px; }
+.designer-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 0.88fr;
+  gap: 64px;
+  align-items: center;
+}
+.designer-headline {
+  font-family: var(--ff-display);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 26px;
+}
+.designer-headline em {
+  font-style: normal;
+  color: var(--accent);
+}
+.designer-philosophy {
+  font-family: var(--ff-sans);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--text-dim);
+  max-width: 520px;
+  margin-bottom: 30px;
+}
+.designer-philosophy strong {
+  color: var(--text);
+  font-weight: 500;
+}
+.designer-meta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.designer-chip {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(237,233,227,0.72);
+  padding: 9px 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+}
+.designer-chip span { color: var(--accent); font-weight: 600; }
+.designer-signature {
+  font-family: 'Sacramento', cursive;
+  font-size: 50px;
+  line-height: 0.9;
+  color: var(--accent);
+  text-shadow: 0 2px 26px rgba(62,155,212,0.45);
+}
+.designer-role {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin-top: 6px;
+}
+/* Monogram seal — the artist's mark, in place of a photo */
+.designer-seal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.seal-ring {
+  position: relative;
+  width: clamp(220px, 25vw, 290px);
+  height: clamp(220px, 25vw, 290px);
+  border-radius: 50%;
+  border: 1px solid rgba(62,155,212,0.30);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 60px rgba(62,155,212,0.12), 0 0 90px rgba(62,155,212,0.10);
+}
+.seal-ring::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(62,155,212,0.13);
+}
+.seal-glow {
+  position: absolute;
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(62,155,212,0.32) 0%, transparent 70%);
+  filter: blur(22px);
+}
+.seal-monogram {
+  position: relative;
+  font-family: var(--ff-display);
+  font-size: clamp(120px, 14vw, 165px);
+  font-weight: 300;
+  line-height: 1;
+  background: linear-gradient(180deg, #d3ebfb 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--accent);
+}
+
 #studio-section {
   opacity: 0;
   transform: translateY(28px);
@@ -1777,6 +1892,13 @@ body.loaded #intro-veil {
   /* Cursor glow is desktop-only (disabled on touch via JS) */
   #cursor-glow { display: none; }
 
+  /* Designer section — stack, text first, seal as a closing flourish */
+  #designer-section { padding-top: 50px; padding-bottom: 50px; }
+  .designer-grid { grid-template-columns: 1fr; gap: 44px; }
+  .designer-seal { order: 2; }
+  .seal-ring { width: 210px; height: 210px; }
+  .seal-monogram { font-size: 120px; }
+
   /* Studio section — lead with the photo + hook on mobile */
   .studio-inner { padding: 60px 24px 80px; }
   .section-eyebrow { margin-bottom: 28px; }
@@ -1826,6 +1948,15 @@ body.loaded #intro-veil {
   /* Final CTA + stats proof breathe a little less wide */
   .stats-proof { font-size: 11px; padding: 0 8px; }
   .cta-headline { font-size: clamp(28px, 8vw, 38px); }
+
+  /* Designer section — scale for phones */
+  .designer-headline { font-size: clamp(26px, 8vw, 34px); }
+  .designer-philosophy { font-size: 15px; }
+  .designer-signature { font-size: 44px; }
+  .designer-meta { gap: 9px; }
+  .designer-chip { font-size: 10px; padding: 8px 13px; }
+  .seal-ring { width: 180px; height: 180px; }
+  .seal-monogram { font-size: 104px; }
 }
 </style>
 
@@ -1930,6 +2061,31 @@ body.loaded #intro-veil {
       </div>
     </div>
     <p class="stats-proof reveal">Real estate websites. AI integrations. High-converting digital experiences. Built for professionals who play to win.</p>
+  </section>
+
+  <section class="content-section" id="designer-section">
+    <div class="designer-grid">
+      <div class="designer-text">
+        <div class="section-eyebrow reveal">The Hand Behind the Work</div>
+        <h2 class="designer-headline reveal">Designed by <em>an artist</em>.<br>Not a template.</h2>
+        <p class="designer-philosophy reveal">Ten years of design, built on one truth: <strong>conversion is human psychology</strong>. Every color, every rhythm, every point of friction is engineered to move people — not just to look beautiful. Your visitors won't see the craft. They'll feel compelled to act.</p>
+        <div class="designer-meta reveal">
+          <div class="designer-chip"><span>10</span> Years of Craft</div>
+          <div class="designer-chip">Conversion Psychology</div>
+          <div class="designer-chip">UI/UX &amp; Art Direction</div>
+        </div>
+        <div class="reveal">
+          <div class="designer-signature">Sonder</div>
+          <div class="designer-role">UI/UX Designer &amp; Artist</div>
+        </div>
+      </div>
+      <div class="designer-seal reveal">
+        <div class="seal-ring">
+          <div class="seal-glow"></div>
+          <div class="seal-monogram">S</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section id="studio-section">
