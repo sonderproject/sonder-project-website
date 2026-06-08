@@ -1465,6 +1465,69 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   line-height: 1.65;
   color: var(--text-dim);
 }
+.why-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 40px;
+}
+.compare-col {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.008) 100%);
+  padding: 30px 30px 34px;
+}
+.compare-col.sonder {
+  border-color: rgba(62,155,212,0.32);
+  background: linear-gradient(135deg, rgba(62,155,212,0.10) 0%, rgba(62,155,212,0.02) 100%);
+  box-shadow: 0 12px 50px rgba(62,155,212,0.12);
+}
+.compare-head {
+  font-family: var(--ff-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.compare-col.ai .compare-head { color: var(--text-dim); }
+.compare-col.sonder .compare-head { color: var(--accent); }
+.compare-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 10px 0;
+  font-family: var(--ff-sans);
+  font-size: 14.5px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+.compare-col.ai .compare-row { color: rgba(237,233,227,0.5); }
+.compare-col.sonder .compare-row { color: var(--text); }
+.compare-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.compare-col.ai .compare-icon {
+  background: rgba(237,233,227,0.05);
+  color: rgba(237,233,227,0.42);
+  border: 1px solid rgba(237,233,227,0.12);
+}
+.compare-col.sonder .compare-icon {
+  background: linear-gradient(180deg, #6fc3f0 0%, var(--accent) 100%);
+  color: #04121c;
+  box-shadow: 0 2px 10px rgba(62,155,212,0.4);
+}
 .why-kicker {
   margin-top: 40px;
   padding: 28px 34px;
@@ -2050,6 +2113,9 @@ body.loaded #intro-veil {
   .why-headline { font-size: clamp(24px, 7.5vw, 32px); }
   .why-card { padding: 24px 22px; }
   .why-kicker { font-size: 17px; padding: 22px 22px; }
+  /* Stack the comparison panels */
+  .why-compare { grid-template-columns: 1fr; }
+  .compare-col { padding: 26px 24px 28px; }
 }
 </style>
 
@@ -2282,6 +2348,26 @@ body.loaded #intro-veil {
         <span class="why-num">06</span>
         <h3 class="why-card-title">The last 20% is the whole game</h3>
         <p class="why-card-desc">AI gets you to "good enough." The polish, the rhythm, the micro-interactions, the details — that final stretch is pure craft, and it's the entire difference between a site people tolerate and one they trust.</p>
+      </div>
+    </div>
+    <div class="why-compare">
+      <div class="compare-col ai reveal">
+        <div class="compare-head">AI Builder Alone</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>Generic, templated layouts</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>Blends in with everyone else</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>No real conversion strategy</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>Stops at "good enough"</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>You're left guessing what works</div>
+        <div class="compare-row"><span class="compare-icon">✕</span>One-size-fits-all output</div>
+      </div>
+      <div class="compare-col sonder reveal">
+        <div class="compare-head">Designed by Sonder</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>Custom design, built around your brand</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>Distinct, premium, unforgettable</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>Engineered on conversion psychology</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>Polished to the last detail</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>10 years of craft behind every choice</div>
+        <div class="compare-row"><span class="compare-icon">✓</span>Tailored to your market &amp; audience</div>
       </div>
     </div>
     <div class="why-kicker reveal">AI in a designer's hands is a superpower. In everyone else's, it's a template generator. <strong>We give you the first one.</strong></div>
