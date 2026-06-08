@@ -627,7 +627,8 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 }
 .nav-link:hover { color: var(--text); }
 .nav-link:hover::after { transform: scaleX(1); }
-.nav-cta-pill {
+/* Solid azure pill — primary path (Sonder Studio, RE agents) */
+.nav-studio-pill {
   font-family: var(--ff-sans);
   font-size: 11px;
   font-weight: 600;
@@ -636,15 +637,42 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   text-decoration: none;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 10px 24px;
+  padding: 10px 20px;
   border-radius: 6px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 4px 16px rgba(62,155,212,0.35);
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   pointer-events: all;
+  position: relative;
+  overflow: hidden;
 }
-.nav-cta-pill:hover {
+.nav-studio-pill:hover {
   transform: translateY(-1px);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 26px rgba(62,155,212,0.55);
+}
+/* Glass/ghost pill — secondary path (AI consulting) */
+.nav-cta-pill {
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(237,233,227,0.82);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.18);
+  text-decoration: none;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border-radius: 6px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  pointer-events: all;
+  position: relative;
+  overflow: hidden;
+}
+.nav-cta-pill:hover {
+  color: rgba(237,233,227,1);
+  border-color: rgba(62,155,212,0.5);
+  background: rgba(62,155,212,0.10);
 }
 
 /* ─── PARTICLE CANVAS ─── */
@@ -1290,6 +1318,29 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   max-width: 760px;
 }
 
+/* ─── CTA MICROCOPY ─── */
+.cta-micro {
+  font-family: var(--ff-sans);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(237,233,227,0.38);
+  margin-top: 14px;
+  text-align: center;
+}
+/* Stats proof line */
+.stats-proof {
+  font-family: var(--ff-sans);
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(237,233,227,0.38);
+  text-align: center;
+  max-width: 480px;
+  margin: 28px auto 0;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
 /* ─── CTA ─── */
 #cta {
   padding-top: 100px;
@@ -1522,11 +1573,11 @@ a:focus-visible, button:focus-visible {
   border-radius: 4px;
 }
 /* Glossy sheen sweep across primary buttons on hover */
-.btn-primary, .cta-btn, .nav-cta-pill {
+.btn-primary, .cta-btn, .nav-studio-pill {
   position: relative;
   overflow: hidden;
 }
-.btn-primary::after, .cta-btn::after, .nav-cta-pill::after {
+.btn-primary::after, .cta-btn::after, .nav-studio-pill::after {
   content: '';
   position: absolute;
   top: 0; left: 0;
@@ -1536,12 +1587,12 @@ a:focus-visible, button:focus-visible {
   transition: transform 0.65s cubic-bezier(0.4,0,0.2,1);
   pointer-events: none;
 }
-.btn-primary:hover::after, .cta-btn:hover::after, .nav-cta-pill:hover::after {
+.btn-primary:hover::after, .cta-btn:hover::after, .nav-studio-pill:hover::after {
   transform: translateX(240%) skewX(-18deg);
 }
 @media (prefers-reduced-motion: reduce) {
   #company-display::before { animation: none; }
-  .btn-primary::after, .cta-btn::after, .nav-cta-pill::after { transition: none; }
+  .btn-primary::after, .cta-btn::after, .nav-studio-pill::after { transition: none; }
   .section-cta::after { animation: none; opacity: 0; }
   .section-cta::before, .cta-btn::before { animation: none; }
 }
@@ -1688,9 +1739,10 @@ body.loaded #intro-veil {
 @media (max-width: 900px) {
   nav { padding: 18px 22px; }
   nav.scrolled { padding: 14px 22px; }
-  .nav-links { gap: 16px; }
+  .nav-links { gap: 10px; }
   .nav-link { display: none; }
-  .nav-cta-pill { padding: 9px 18px; }
+  .nav-studio-pill { padding: 8px 14px; font-size: 10px; }
+  .nav-cta-pill { padding: 8px 14px; font-size: 10px; }
   .content-section { padding: 0 24px; }
 
   /* Hero photo (full-bleed) */
@@ -1771,7 +1823,8 @@ body.loaded #intro-veil {
     <a href="#studio-section" class="nav-link">Studio</a>
     <a href="#consulting-section" class="nav-link">Consulting</a>
     <a href="#cta" class="nav-link">Contact</a>
-    <a href="https://cal.com/dante-valentino/ai-consulting" class="nav-cta-pill" target="_blank">Book a Call</a>
+    <a href="https://sonderstudio.space" class="nav-studio-pill" target="_blank">Sonder Studio ↗</a>
+    <a href="https://cal.com/dante-valentino/ai-consulting" class="nav-cta-pill" target="_blank">Free AI Call</a>
   </div>
   <div class="nav-aurora"></div>
 </nav>
@@ -1807,16 +1860,17 @@ body.loaded #intro-veil {
         The Sonder Ecosystem
       </div>
       <h1 class="hero-headline">Building Digital Worlds for Ambitious Brands</h1>
-      <p class="hero-subhead">Sonder Project is the parent company behind Sonder Studio and a growing suite of digital products. Premium web experiences, AI integrations, and digital assets — built for businesses that refuse to be ordinary.</p>
+      <p class="hero-subhead">Built for real estate professionals who want to stand out — and businesses that want AI working for them. Sonder Project is the parent company behind Sonder Studio and a growing suite of digital tools.</p>
       <div class="hero-actions">
-        <a href="#studio-section" class="btn-primary">Explore Our Work</a>
+        <a href="#studio-section" class="btn-primary">Explore Sonder Studio</a>
         <a href="https://cal.com/dante-valentino/ai-consulting" class="btn-ghost" target="_blank">
-          Book a Call
+          Book a Free AI Call
           <svg class="arrow-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
       </div>
+      <p class="cta-micro">Free AI call · 30 min · No pressure</p>
       <div class="cred-strip">
         <span class="cred-item">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 6.9H22l-6 4.4 2.3 7-6.3-4.5L5.7 20l2.3-7-6-4.4h7.6z" fill="currentColor"/></svg>
@@ -1845,14 +1899,15 @@ body.loaded #intro-veil {
         <div class="stat-label">Direct partnership, no middlemen</div>
       </div>
       <div class="stat reveal">
-        <div class="stat-num" data-count="10" data-suffix="x">0</div>
-        <div class="stat-label">Built for high conversion</div>
+        <div class="stat-num" data-count="27" data-suffix="+">0</div>
+        <div class="stat-label">Businesses helped with AI</div>
       </div>
       <div class="stat reveal">
         <div class="stat-num" data-count="24" data-suffix="/7">0</div>
         <div class="stat-label">AI that never sleeps</div>
       </div>
     </div>
+    <p class="stats-proof reveal">Real estate websites. AI integrations. High-converting digital experiences. Built for professionals who play to win.</p>
   </section>
 
   <section id="studio-section">
@@ -1905,9 +1960,10 @@ body.loaded #intro-veil {
             <span class="studio-tag">Workflow Design</span>
           </div>
           <a href="https://cal.com/dante-valentino/ai-consulting" class="section-cta" target="_blank">
-            <span class="cta-label">Book a Consultation</span>
+            <span class="cta-label">Book a Free AI Call</span>
             <span class="cta-arrow">↗</span>
           </a>
+          <p class="cta-micro">Free · 30 min · No pressure</p>
         </div>
         <div class="studio-card-visual">
           <img src="/consulting.webp" alt="Aerial drone view of a coastal city and marina — Sonder Consulting AI and business solutions" class="studio-visual-img" width="1800" height="1100" loading="lazy" />
@@ -1945,17 +2001,22 @@ body.loaded #intro-veil {
         <p class="faq-a">Yes. Sonder Consulting helps businesses put AI to work — from strategy and workflow automation to custom AI tools built around how you operate. We help companies cut busywork and integrate AI where it actually moves the needle.</p>
       </div>
       <div class="faq-item reveal">
+        <h3 class="faq-q">What does the process look like — first call to launch?</h3>
+        <p class="faq-a">It starts with a free 30-minute call to understand your goals and make sure we're the right fit. If we move forward, we put together a custom proposal, kick off the build, and keep you close throughout. Every project runs on a defined scope and timeline — we move fast without cutting corners.</p>
+      </div>
+      <div class="faq-item reveal">
         <h3 class="faq-q">How do I start a project with Sonder Project?</h3>
-        <p class="faq-a">Book a call and we'll talk through your goals. We're selective about who we work with, so every engagement starts with a conversation to make sure it's the right fit.</p>
+        <p class="faq-a">Book a free 30-minute call — no pressure, no commitment. We'll talk through your goals and figure out if we're the right fit. If we are, we'll take it from there.</p>
       </div>
     </div>
   </section>
 
   <section class="content-section" id="cta">
     <div class="cta-eyebrow">Let's Work Together</div>
-    <h2 class="cta-headline">Ready to Build Something Extraordinary?</h2>
-    <p class="cta-sub">Whether it's a website, an AI tool, or a complete digital presence — let's find out what's possible.</p>
-    <a href="https://cal.com/dante-valentino/ai-consulting" class="cta-btn" target="_blank"><span class="cta-label">Book a Call</span></a>
+    <h2 class="cta-headline">Let's Build What You've Been Putting Off.</h2>
+    <p class="cta-sub">Real estate website. AI integration. Full digital presence. It all starts with one free conversation.</p>
+    <a href="https://cal.com/dante-valentino/ai-consulting" class="cta-btn" target="_blank"><span class="cta-label">Book Your Free Call</span></a>
+    <p class="cta-micro">Free · 30 min · No commitment</p>
   </section>
 
   <footer>
