@@ -13,7 +13,8 @@
 <link rel="canonical" href="https://www.sonderproject.co/">
 
 <!-- ─── ICONS ─── -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230A0A09'/%3E%3Ctext x='16' y='22' font-family='Outfit,Arial,sans-serif' font-size='18' font-weight='700' fill='%233E9BD4' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="/logo-mark.png">
+<link rel="apple-touch-icon" href="/logo-mark.png">
 
 <!-- ─── OPEN GRAPH (LinkedIn, iMessage, WhatsApp, Facebook) ─── -->
 <meta property="og:type" content="website">
@@ -44,6 +45,7 @@
       "name": "Sonder Project",
       "url": "https://www.sonderproject.co/",
       "description": "Parent company building premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands.",
+      "logo": "https://www.sonderproject.co/logo-mark.png",
       "image": "https://www.sonderproject.co/pexels-joshsorenson-1154498.jpg",
       "subOrganization": {
         "@type": "Organization",
@@ -439,6 +441,9 @@ nav.scrolled {
   pointer-events: all;
 }
 .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
   font-family: var(--ff-display);
   font-size: 14px;
   font-weight: 600;
@@ -447,6 +452,11 @@ nav.scrolled {
   text-decoration: none;
   pointer-events: all;
   text-transform: uppercase;
+}
+.nav-logo-mark {
+  height: 26px;
+  width: auto;
+  display: block;
 }
 .nav-links {
   display: flex;
@@ -1006,12 +1016,21 @@ footer {
   gap: 40px;
 }
 .footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--ff-display);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-subtle);
+}
+.footer-logo-mark {
+  height: 20px;
+  width: auto;
+  display: block;
+  opacity: 0.55;
 }
 .footer-links {
   display: flex;
@@ -1165,7 +1184,7 @@ footer {
 </head><body>
 
 <nav id="main-nav">
-  <a href="#" class="nav-logo">Sonder Project</a>
+  <a href="#" class="nav-logo"><img src="/logo-white.png" alt="Sonder Project" class="nav-logo-mark">Sonder Project</a>
   <div class="nav-links">
     <a href="#studio-section" class="nav-link">Studio</a>
     <a href="#cta" class="nav-link">Contact</a>
@@ -1262,7 +1281,7 @@ footer {
 
   <footer>
     <div class="footer-left">
-      <div class="footer-logo">Sonder Project</div>
+      <div class="footer-logo"><img src="/logo-white.png" alt="Sonder Project" class="footer-logo-mark">Sonder Project</div>
       <div class="footer-links">
         <a href="https://sonderstudio.space" class="footer-link" target="_blank">Sonder Studio</a>
         <a href="#cta" class="footer-link">Contact</a>
