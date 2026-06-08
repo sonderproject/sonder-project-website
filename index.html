@@ -489,16 +489,16 @@ nav.scrolled {
 
 /* ─── HERO ─── */
 #hero-text {
-  padding-top: 140px;
-  padding-bottom: 120px;
+  max-width: none;
+  padding: 140px 0 0 0;
+  margin-left: 0;
+  margin-right: 0;
   transition-delay: 0s;
-  max-width: 1100px;
 }
-.hero-inner {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 80px;
-  align-items: center;
+.hero-top {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 56px 72px;
 }
 .hero-badge {
   display: inline-flex;
@@ -528,6 +528,7 @@ nav.scrolled {
   letter-spacing: -0.025em;
   margin-bottom: 24px;
   text-wrap: pretty;
+  max-width: 680px;
 }
 .hero-subhead {
   font-family: var(--ff-sans);
@@ -535,7 +536,7 @@ nav.scrolled {
   font-weight: 300;
   color: var(--text-dim);
   line-height: 1.74;
-  max-width: 410px;
+  max-width: 480px;
   margin-bottom: 48px;
   letter-spacing: 0.01em;
 }
@@ -578,59 +579,27 @@ nav.scrolled {
 .btn-ghost:hover .arrow-icon { transform: translateX(3px); }
 
 /* Hero image */
-.hero-image-frame {
-  position: relative;
-  aspect-ratio: 4/5;
-  border-radius: 3px;
-  overflow: hidden;
-  border: 1px solid rgba(62,155,212,0.14);
+.hero-image-wrap {
+  width: 100%;
+  max-width: 1212px;
+  margin: 0 auto;
+  padding: 0 56px;
+  box-sizing: border-box;
 }
-.hero-placeholder-bg {
+.hero-image-frame {
+  width: 100%;
+  height: 58vh;
+  border-radius: 6px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+.hero-image-frame img {
   width: 100%;
   height: 100%;
-  background:
-    radial-gradient(ellipse at 35% 25%, rgba(62,155,212,0.13) 0%, transparent 60%),
-    radial-gradient(ellipse at 75% 75%, rgba(62,155,212,0.06) 0%, transparent 50%),
-    linear-gradient(180deg, rgba(10,10,9,0.5) 0%, rgba(10,10,9,0.92) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.hero-placeholder-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(62,155,212,0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(62,155,212,0.045) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.hero-placeholder-text {
-  font-family: var(--ff-sans);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(62,155,212,0.22);
-  position: relative;
-  z-index: 1;
-}
-.hero-image-tag {
-  position: absolute;
-  bottom: 18px;
-  left: 18px;
-  font-family: var(--ff-sans);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(237,233,227,0.35);
-  background: rgba(10,10,9,0.65);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 6px 12px;
-  border-radius: 2px;
-  border: 1px solid rgba(237,233,227,0.08);
+  object-fit: cover;
+  object-position: center 38%;
+  display: block;
 }
 
 /* ─── COMPANY DISPLAY ─── */
@@ -985,9 +954,10 @@ footer {
   .nav-links { gap: 20px; }
   .nav-link { display: none; }
   .content-section { padding: 0 28px; }
-  #hero-text { padding-top: 110px; padding-bottom: 80px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero-right { display: none; }
+  #hero-text { padding-top: 110px; }
+  .hero-top { padding: 0 28px 52px; }
+  .hero-image-wrap { padding: 0 28px; }
+  .hero-image-frame { height: 44vh; }
   .studio-inner { padding: 60px 28px 80px; }
   .studio-card { grid-template-columns: 1fr; }
   .studio-card-visual { display: none; }
@@ -1021,32 +991,26 @@ footer {
 
 <div id="content">
   <section class="content-section" id="hero-text">
-    <div class="hero-inner">
-      <div class="hero-left">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          The Sonder Ecosystem
-        </div>
-        <h1 class="hero-headline">Building Digital Worlds for Ambitious Brands</h1>
-        <p class="hero-subhead">Sonder Project is the parent company behind Sonder Studio and a growing suite of digital products. Premium web experiences, AI integrations, and digital assets — built for businesses that refuse to be ordinary.</p>
-        <div class="hero-actions">
-          <a href="#studio-section" class="btn-primary">Explore Our Work</a>
-          <a href="https://cal.com/sonderproject" class="btn-ghost" target="_blank">
-            Book a Call
-            <svg class="arrow-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
+    <div class="hero-top">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        The Sonder Ecosystem
       </div>
-      <div class="hero-right">
-        <div class="hero-image-frame">
-          <div class="hero-placeholder-bg">
-            <div class="hero-placeholder-grid"></div>
-            <span class="hero-placeholder-text">Photo Coming Soon</span>
-          </div>
-          <div class="hero-image-tag">Sonder Project — 2026</div>
-        </div>
+      <h1 class="hero-headline">Building Digital Worlds for Ambitious Brands</h1>
+      <p class="hero-subhead">Sonder Project is the parent company behind Sonder Studio and a growing suite of digital products. Premium web experiences, AI integrations, and digital assets — built for businesses that refuse to be ordinary.</p>
+      <div class="hero-actions">
+        <a href="#studio-section" class="btn-primary">Explore Our Work</a>
+        <a href="https://cal.com/sonderproject" class="btn-ghost" target="_blank">
+          Book a Call
+          <svg class="arrow-icon" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-image-frame">
+        <img src="/pexels-danieljschwarz-34540137.jpg" alt="Sonder Project" />
       </div>
     </div>
   </section>
