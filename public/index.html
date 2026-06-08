@@ -1114,7 +1114,7 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   border-color: rgba(62,155,212,0.5);
   transform: translate(2px, -2px);
 }
-/* ─── Irresistible section CTA ─── */
+/* ─── Irresistible liquid-glass section CTA ─── */
 .section-cta {
   position: relative;
   overflow: hidden;
@@ -1126,34 +1126,67 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   font-weight: 600;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: #04121c;
-  background: linear-gradient(180deg, #7cc8f1 0%, var(--accent) 100%);
+  color: #f2f8ff;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 46%, rgba(62,155,212,0.20) 100%);
+  backdrop-filter: blur(16px) saturate(1.9);
+  -webkit-backdrop-filter: blur(16px) saturate(1.9);
+  border: 1px solid rgba(255,255,255,0.24);
   padding: 16px 40px;
   border-radius: 999px;
   text-decoration: none;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 28px rgba(62,155,212,0.4);
-  animation: ctaBreathe 3s ease-in-out infinite;
-  transition: transform 0.22s ease, filter 0.22s ease;
+  text-shadow: 0 1px 8px rgba(4,18,28,0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -10px 20px rgba(62,155,212,0.12),
+    0 8px 30px rgba(62,155,212,0.28);
+  animation: ctaBreathe 3.4s ease-in-out infinite;
+  transition: transform 0.22s ease, border-color 0.3s ease;
   will-change: transform;
+}
+/* iridescent rainbow tint */
+.section-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+    #ff5f9e, #ff9966, #ffe66d, #5cffb1, #3E9BD4, #9b7bff, #ff5f9e);
+  background-size: 300% 100%;
+  animation: auroraShift 9s linear infinite;
+  opacity: 0.20;
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 .section-cta .cta-label,
 .section-cta .cta-arrow { position: relative; z-index: 1; }
 .section-cta .cta-arrow { font-size: 15px; line-height: 1; transition: transform 0.25s ease; }
-.section-cta:hover { transform: translateY(-3px) scale(1.015); filter: brightness(1.06); }
+.section-cta:hover { transform: translateY(-3px) scale(1.015); border-color: rgba(255,255,255,0.42); }
+.section-cta:hover::before { opacity: 0.34; }
 .section-cta:hover .cta-arrow { transform: translateX(4px); }
 .section-cta::after {
   content: '';
   position: absolute;
   top: 0; left: -130%;
   width: 60%; height: 100%;
-  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+  background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
   transform: skewX(-18deg);
   animation: ctaSheen 4.2s ease-in-out infinite;
   pointer-events: none;
 }
 @keyframes ctaBreathe {
-  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 8px 28px rgba(62,155,212,0.4); }
-  50% { box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 12px 44px rgba(62,155,212,0.72); }
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.55),
+      inset 0 -10px 20px rgba(62,155,212,0.12),
+      0 8px 30px rgba(62,155,212,0.28);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      inset 0 -10px 20px rgba(62,155,212,0.20),
+      0 12px 44px rgba(62,155,212,0.55);
+  }
 }
 @keyframes ctaSheen {
   0% { left: -130%; }
@@ -1307,19 +1340,42 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #04121c;
-  background: linear-gradient(180deg, #6fc3f0 0%, var(--accent) 100%);
+  color: #f2f8ff;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.05) 46%, rgba(62,155,212,0.20) 100%);
+  backdrop-filter: blur(16px) saturate(1.9);
+  -webkit-backdrop-filter: blur(16px) saturate(1.9);
+  border: 1px solid rgba(255,255,255,0.24);
   padding: 18px 56px;
   text-decoration: none;
-  border-radius: 10px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 8px 30px rgba(62,155,212,0.35);
-  animation: ctaBreathe 3s ease-in-out infinite;
-  transition: transform 0.2s ease, filter 0.22s ease;
+  text-shadow: 0 1px 8px rgba(4,18,28,0.45);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -10px 20px rgba(62,155,212,0.12),
+    0 8px 30px rgba(62,155,212,0.28);
+  animation: ctaBreathe 3.4s ease-in-out infinite;
+  transition: transform 0.2s ease, border-color 0.3s ease;
 }
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg,
+    #ff5f9e, #ff9966, #ffe66d, #5cffb1, #3E9BD4, #9b7bff, #ff5f9e);
+  background-size: 300% 100%;
+  animation: auroraShift 9s linear infinite;
+  opacity: 0.20;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.cta-btn .cta-label { position: relative; z-index: 1; }
 .cta-btn:hover {
   transform: translateY(-3px) scale(1.012);
-  filter: brightness(1.06);
+  border-color: rgba(255,255,255,0.42);
 }
+.cta-btn:hover::before { opacity: 0.34; }
 
 /* ─── FOOTER ─── */
 footer {
@@ -1498,6 +1554,7 @@ a:focus-visible, button:focus-visible {
   .btn-primary::after, .cta-btn::after, .nav-cta-pill::after { transition: none; }
   .section-cta, .cta-btn { animation: none; }
   .section-cta::after { animation: none; opacity: 0; }
+  .section-cta::before, .cta-btn::before { animation: none; }
 }
 
 /* ─── PAGE-LOAD INTRO VEIL ─── */
@@ -1909,7 +1966,7 @@ body.loaded #intro-veil {
     <div class="cta-eyebrow">Let's Work Together</div>
     <h2 class="cta-headline">Ready to Build Something Extraordinary?</h2>
     <p class="cta-sub">Whether it's a website, an AI tool, or a complete digital presence — let's find out what's possible.</p>
-    <a href="https://cal.com/dante-valentino/ai-consulting" class="cta-btn" target="_blank">Book a Call</a>
+    <a href="https://cal.com/dante-valentino/ai-consulting" class="cta-btn" target="_blank"><span class="cta-label">Book a Call</span></a>
   </section>
 
   <footer>
