@@ -1683,14 +1683,27 @@ function sampleTextPoints() {
   oc.textAlign = 'center';
   oc.textBaseline = 'middle';
 
-  if (twoLine) {
-    const fs = Math.round(tw * 0.26);
+  // Pick a font size that guarantees the line fits inside the canvas width —
+  // otherwise the centered text overflows and edge letters (the leading "S")
+  // get clipped off and never sampled.
+  function fitFont(text, startFrac) {
+    let fs = Math.round(tw * startFrac);
     oc.font = `600 ${fs}px 'Outfit', sans-serif`;
+    const maxW = tw * 0.92;
+    const w = oc.measureText(text).width;
+    if (w > maxW) {
+      fs = Math.floor(fs * maxW / w);
+      oc.font = `600 ${fs}px 'Outfit', sans-serif`;
+    }
+    return fs;
+  }
+
+  if (twoLine) {
+    fitFont('Project', 0.26);
     oc.fillText('Sonder', tw / 2, th * 0.32);
     oc.fillText('Project', tw / 2, th * 0.70);
   } else {
-    const fs = Math.round(tw * 0.175);
-    oc.font = `600 ${fs}px 'Outfit', sans-serif`;
+    fitFont('Sonder Project', 0.175);
     oc.fillText('Sonder Project', tw / 2, th / 2);
   }
 
