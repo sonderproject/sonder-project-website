@@ -822,39 +822,50 @@ nav.scrolled {
 .studio-card-visual {
   position: relative;
   overflow: hidden;
-  background: rgba(10,10,9,0.4);
   border-left: 1px solid rgba(62,155,212,0.08);
   min-height: 480px;
 }
-.studio-visual-inner {
+.studio-visual-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(ellipse at 60% 35%, rgba(62,155,212,0.11) 0%, transparent 60%),
-    radial-gradient(ellipse at 20% 75%, rgba(62,155,212,0.05) 0%, transparent 50%);
+  object-fit: cover;
+  object-position: center 55%;
+  display: block;
+}
+.studio-visual-overlay {
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10,10,9,0.08) 0%,
+    rgba(10,10,9,0.25) 40%,
+    rgba(10,10,9,0.85) 100%
+  );
 }
-.studio-visual-grid {
+.studio-visual-copy {
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(62,155,212,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(62,155,212,0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
+  bottom: 40px;
+  left: 40px;
+  right: 40px;
+  z-index: 2;
 }
-.studio-visual-label {
-  font-family: var(--ff-sans);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: rgba(62,155,212,0.2);
-  position: relative;
-  z-index: 1;
+.studio-visual-copy-headline {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 600;
+  color: #EDE9E3;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.studio-visual-copy-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(237,233,227,0.6);
+  letter-spacing: 0.03em;
 }
 
 /* ─── CTA ─── */
@@ -1124,9 +1135,11 @@ footer {
           </a>
         </div>
         <div class="studio-card-visual">
-          <div class="studio-visual-inner">
-            <div class="studio-visual-grid"></div>
-            <span class="studio-visual-label">Preview Coming Soon</span>
+          <img src="/pexels-joshsorenson-1154498.jpg" alt="Sonder Studio" class="studio-visual-img" />
+          <div class="studio-visual-overlay"></div>
+          <div class="studio-visual-copy">
+            <div class="studio-visual-copy-headline">In real estate, the best-looking agent wins.</div>
+            <div class="studio-visual-copy-sub">Let's make sure that's you.</div>
           </div>
         </div>
       </div>
