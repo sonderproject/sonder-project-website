@@ -72,6 +72,15 @@
       "serviceType": ["Web Design", "AI Integration", "Real Estate Marketing", "Brand Identity"]
     },
     {
+      "@type": "ProfessionalService",
+      "name": "Sonder Consulting",
+      "url": "https://www.sonderproject.co/#consulting-section",
+      "parentOrganization": { "@id": "https://www.sonderproject.co/#organization" },
+      "description": "AI consulting and business solutions — helping companies automate workflows, integrate AI, and build custom tools that move the needle.",
+      "areaServed": "US",
+      "serviceType": ["AI Consulting", "Business Automation", "Workflow Design", "Custom AI Tools"]
+    },
+    {
       "@type": "FAQPage",
       "@id": "https://www.sonderproject.co/#faq",
       "mainEntity": [
@@ -105,6 +114,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built with no templates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Sonder Project offer AI consulting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Sonder Consulting helps businesses put AI to work — from strategy and workflow automation to custom AI tools built around how a company operates. We help companies cut busywork and integrate AI where it actually moves the needle."
           }
         },
         {
@@ -1099,6 +1116,23 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   letter-spacing: 0.03em;
 }
 
+/* ─── Consulting section (reuses studio-card system, reversed layout) ─── */
+#consulting-section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1s ease 0.16s, transform 1s ease 0.16s;
+}
+#consulting-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.studio-card.reversed .studio-card-visual {
+  border-left: none;
+  border-right: 1px solid rgba(62,155,212,0.08);
+  order: -1;
+}
+.studio-card.reversed .studio-visual-img { object-position: center 60%; }
+
 /* ─── FAQ ─── */
 #faq {
   padding-top: 60px;
@@ -1381,6 +1415,7 @@ footer {
   <a href="#" class="nav-logo"><img src="/logo-white.png" alt="Sonder Project" class="nav-logo-mark">Sonder Project</a>
   <div class="nav-links">
     <a href="#studio-section" class="nav-link">Studio</a>
+    <a href="#consulting-section" class="nav-link">Consulting</a>
     <a href="#cta" class="nav-link">Contact</a>
     <a href="https://cal.com/sonderproject" class="nav-cta-pill" target="_blank">Book a Call</a>
   </div>
@@ -1391,7 +1426,7 @@ footer {
 
 <div id="hero-photo">
   <div class="hero-photo-inner">
-    <img src="/hero.webp" alt="Aerial view of a coastal city marina at golden hour — Sonder Project premium digital studio" width="2000" height="1200" />
+    <img src="/hero.webp" alt="Person capturing a coastal landscape on a phone — Sonder Project digital craft" width="2000" height="1333" />
     <div class="hero-photo-vignette"></div>
     <div class="hero-photo-text">
       <div class="hero-photo-label">Sonder Project</div>
@@ -1467,6 +1502,39 @@ footer {
     </div>
   </section>
 
+  <section id="consulting-section">
+    <div class="studio-inner">
+      <div class="section-eyebrow">AI &amp; Business Solutions</div>
+      <div class="studio-card reversed">
+        <div class="studio-card-body">
+          <div>
+            <div class="studio-card-label">Sonder Consulting</div>
+            <div class="studio-card-name">AI That Works for Your Business</div>
+            <p class="studio-card-desc">Most businesses know AI matters — few know where to start. Sonder Consulting helps companies cut busywork, automate workflows, and put AI to work where it actually moves the needle. Strategy, integration, and custom tools, built around how you operate.</p>
+          </div>
+          <div class="studio-tags">
+            <span class="studio-tag">AI Strategy</span>
+            <span class="studio-tag">Automation</span>
+            <span class="studio-tag">Custom Tools</span>
+            <span class="studio-tag">Workflow Design</span>
+          </div>
+          <a href="https://cal.com/sonderproject" class="studio-visit-link" target="_blank">
+            Book a Consultation
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+        <div class="studio-card-visual">
+          <img src="/consulting.webp" alt="Aerial view of a coastal downtown business district at dusk — Sonder Consulting AI and business solutions" class="studio-visual-img" width="1800" height="1100" loading="lazy" />
+          <div class="studio-visual-overlay"></div>
+          <div class="studio-visual-copy">
+            <div class="studio-visual-copy-headline">Your competitors are already using AI.</div>
+            <div class="studio-visual-copy-sub">Let's make sure you're ahead of them.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="content-section" id="faq">
     <div class="section-eyebrow">Frequently Asked</div>
     <div class="faq-list">
@@ -1485,6 +1553,10 @@ footer {
       <div class="faq-item">
         <h3 class="faq-q">What services do you offer?</h3>
         <p class="faq-a">Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built — we don't use templates.</p>
+      </div>
+      <div class="faq-item">
+        <h3 class="faq-q">Does Sonder Project offer AI consulting?</h3>
+        <p class="faq-a">Yes. Sonder Consulting helps businesses put AI to work — from strategy and workflow automation to custom AI tools built around how you operate. We help companies cut busywork and integrate AI where it actually moves the needle.</p>
       </div>
       <div class="faq-item">
         <h3 class="faq-q">How do I start a project with Sonder Project?</h3>
@@ -1816,6 +1888,8 @@ function onScroll() {
     sections.forEach(s => s.classList.add('visible'));
     const studio = document.getElementById('studio-section');
     if (studio) studio.classList.add('visible');
+    const consulting = document.getElementById('consulting-section');
+    if (consulting) consulting.classList.add('visible');
   }
   const nav = document.getElementById('main-nav');
   if (nav) nav.classList.toggle('scrolled', window.scrollY > 32);
@@ -1841,14 +1915,16 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
 sections.forEach(s => obs.observe(s));
 
-// Studio section reveal
-const studioSection = document.getElementById('studio-section');
-if (studioSection) {
-  const studioObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  studioObs.observe(studioSection);
-}
+// Studio + consulting section reveal
+['studio-section', 'consulting-section'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    revealObs.observe(el);
+  }
+});
 
 // ─── TWEAKS ────────────────────────────────────────────────────────
 function applyDensity(val) {

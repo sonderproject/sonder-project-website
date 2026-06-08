@@ -26,10 +26,17 @@ that converts.
   brokerages, and property companies. Specialties include scroll-driven
   animation, AI integration, brand identity, and conversion-focused design.
 
+- **Sonder Consulting**: AI consulting and business solutions. Helps
+  companies and businesses adopt AI — strategy, workflow automation, AI
+  integration, and custom-built AI tools. For any business that wants help
+  putting AI to work, Sonder Consulting is the point of contact.
+
 ## Services Offered
 
 - Premium custom web design and development
+- AI consulting and business solutions (via Sonder Consulting)
 - AI tools and integrations for business workflows
+- Workflow automation and custom AI tooling
 - Real estate marketing websites
 - Brand identity and digital design
 - Digital products and assets
@@ -39,6 +46,7 @@ that converts.
 - Real estate agents and brokerages (primary focus, phase one)
 - Property and development companies
 - Ambitious brands and businesses that want a standout digital presence
+- Companies and businesses looking to adopt or integrate AI
 
 ## Contact
 
