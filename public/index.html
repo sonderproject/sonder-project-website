@@ -422,6 +422,34 @@ nav.scrolled {
   background: var(--bg);
 }
 
+/* ─── HERO PHOTO (fixed, initial viewport) ─── */
+#hero-photo {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.1s linear;
+}
+.hero-photo-inner {
+  width: 88%;
+  max-width: 1100px;
+  height: 56vh;
+  border-radius: 6px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+.hero-photo-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  display: block;
+}
+
 /* ─── SCROLL DRIVER ─── */
 #scroll-driver {
   height: 250vh;
@@ -981,6 +1009,12 @@ footer {
 
 <canvas id="particle-canvas"></canvas>
 
+<div id="hero-photo">
+  <div class="hero-photo-inner">
+    <img src="/pexels-danieljschwarz-34540137.jpg" alt="Sonder Project" />
+  </div>
+</div>
+
 <!-- scroll driver — gives scroll height for the transformation sequence -->
 <div id="scroll-driver"></div>
 
@@ -1006,11 +1040,6 @@ footer {
             <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
-      </div>
-    </div>
-    <div class="hero-image-wrap">
-      <div class="hero-image-frame">
-        <img src="/pexels-danieljschwarz-34540137.jpg" alt="Sonder Project" />
       </div>
     </div>
   </section>
@@ -1376,6 +1405,8 @@ function onScroll() {
   }
   const nav = document.getElementById('main-nav');
   if (nav) nav.classList.toggle('scrolled', window.scrollY > 32);
+  const heroPhoto = document.getElementById('hero-photo');
+  if (heroPhoto) heroPhoto.style.opacity = Math.max(0, 1 - targetScrollProgress * 2.8);
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
