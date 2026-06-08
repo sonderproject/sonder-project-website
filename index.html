@@ -1452,6 +1452,144 @@ a:focus-visible, button:focus-visible {
   .btn-primary::after, .cta-btn::after, .nav-cta-pill::after { transition: none; }
 }
 
+/* ─── PAGE-LOAD INTRO VEIL ─── */
+#intro-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: #0A0A09;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 18px;
+  transition: opacity 0.9s ease 0.15s, visibility 0s linear 1.05s;
+}
+#intro-veil .intro-mark {
+  width: 46px;
+  height: auto;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: introMark 1.1s cubic-bezier(0.4,0,0.2,1) forwards;
+  filter: drop-shadow(0 6px 24px rgba(62,155,212,0.35));
+}
+#intro-veil .intro-word {
+  font-family: var(--ff-display);
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(237,233,227,0.62);
+  opacity: 0;
+  animation: introMark 1.1s ease 0.18s forwards;
+  padding-left: 0.42em;
+}
+@keyframes introMark {
+  to { opacity: 1; transform: none; }
+}
+body.loaded #intro-veil {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ─── CURSOR-REACTIVE GLOW (desktop) ─── */
+#cursor-glow {
+  position: fixed;
+  top: 0; left: 0;
+  width: 540px; height: 540px;
+  margin: -270px 0 0 -270px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(62,155,212,0.10) 0%, rgba(62,155,212,0.04) 35%, rgba(62,155,212,0) 70%);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  will-change: transform;
+}
+
+/* ─── CREDIBILITY STRIP ─── */
+.cred-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 26px;
+  margin-top: 40px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.cred-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.cred-item svg { flex-shrink: 0; color: var(--accent); }
+
+/* ─── STATS ─── */
+#stats {
+  padding-top: 0;
+  padding-bottom: 30px;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.stat {
+  text-align: center;
+  padding: 30px 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), border-color 0.4s ease;
+}
+.stat:hover { transform: translateY(-4px); border-color: rgba(62,155,212,0.28); }
+.stat-num {
+  font-family: var(--ff-display);
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(62,155,212,0.85) 130%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat-label {
+  margin-top: 14px;
+  font-family: var(--ff-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+/* ─── SCROLL-REVEAL STAGGER ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.75s cubic-bezier(0.4,0,0.2,1), transform 0.75s cubic-bezier(0.4,0,0.2,1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  #intro-veil .intro-mark, #intro-veil .intro-word { animation: none; opacity: 1; transform: none; }
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   nav { padding: 18px 22px; }
@@ -1475,6 +1613,19 @@ a:focus-visible, button:focus-visible {
 
   /* Company display */
   #company-display { padding-top: 60px; padding-bottom: 70px; }
+
+  /* Credibility strip */
+  .cred-strip { gap: 12px 20px; margin-top: 32px; padding-top: 22px; }
+  .cred-item { font-size: 10px; letter-spacing: 0.1em; }
+
+  /* Stats */
+  #stats { padding-bottom: 18px; }
+  .stats-row { gap: 12px; }
+  .stat { padding: 24px 10px; border-radius: 13px; }
+  .stat-label { font-size: 10px; letter-spacing: 0.1em; margin-top: 10px; }
+
+  /* Cursor glow is desktop-only (disabled on touch via JS) */
+  #cursor-glow { display: none; }
 
   /* Studio section — lead with the photo + hook on mobile */
   .studio-inner { padding: 60px 24px 80px; }
@@ -1504,11 +1655,21 @@ a:focus-visible, button:focus-visible {
   .hero-photo-headline { font-size: clamp(24px, 8vw, 32px); }
   .studio-card-visual { height: 260px; }
   .btn-primary, .btn-ghost { font-size: 10px; }
+  /* Stack stats so the numbers stay large and legible */
+  .stats-row { grid-template-columns: 1fr; gap: 10px; max-width: 340px; }
+  .stat { padding: 22px 16px; }
 }
 </style>
 
 
 </head><body>
+
+<div id="intro-veil">
+  <img src="/logo-mark.png" alt="" class="intro-mark" width="46" height="46" />
+  <div class="intro-word">Sonder Project</div>
+</div>
+
+<div id="cursor-glow"></div>
 
 <nav id="main-nav">
   <a href="#" class="nav-logo"><img src="/logo-white.png" alt="Sonder Project" class="nav-logo-mark">Sonder Project</a>
@@ -1562,11 +1723,42 @@ a:focus-visible, button:focus-visible {
           </svg>
         </a>
       </div>
+      <div class="cred-strip">
+        <span class="cred-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.4 6.9H22l-6 4.4 2.3 7-6.3-4.5L5.7 20l2.3-7-6-4.4h7.6z" fill="currentColor"/></svg>
+          Built for real estate professionals
+        </span>
+        <span class="cred-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          100% custom-built — no templates
+        </span>
+        <span class="cred-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          AI-integrated workflows
+        </span>
+      </div>
     </div>
   </section>
 
   <section class="content-section" id="company-display">
     <div class="company-name-large">Sonder<br>Project</div>
+  </section>
+
+  <section class="content-section" id="stats">
+    <div class="stats-row">
+      <div class="stat reveal">
+        <div class="stat-num" data-count="3" data-suffix="">0</div>
+        <div class="stat-label">Brands in the ecosystem</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num" data-count="100" data-suffix="%">0</div>
+        <div class="stat-label">Custom-built, no templates</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num" data-count="24" data-suffix="/7">0</div>
+        <div class="stat-label">AI that never sleeps</div>
+      </div>
+    </div>
   </section>
 
   <section id="studio-section">
@@ -1638,27 +1830,27 @@ a:focus-visible, button:focus-visible {
   <section class="content-section" id="faq">
     <div class="section-eyebrow">Frequently Asked</div>
     <div class="faq-list">
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">What is Sonder Project?</h3>
         <p class="faq-a">Sonder Project is a digital studio and product company — the parent company behind Sonder Studio and a growing suite of digital products. We build premium websites, AI tools, and digital experiences for real estate professionals and ambitious brands.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">What does Sonder Studio do?</h3>
         <p class="faq-a">Sonder Studio is our flagship service. We design and build high-performance websites and digital experiences for real estate agents, brokerages, and property companies — with scroll-driven animation, AI integration, and conversion-focused design.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">Who does Sonder Project work with?</h3>
         <p class="faq-a">Our phase-one focus is real estate professionals — agents, brokerages, and property companies who want a premium digital presence that stands out and converts. We also work with ambitious brands across other industries.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">What services do you offer?</h3>
         <p class="faq-a">Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built — we don't use templates.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">Does Sonder Project offer AI consulting?</h3>
         <p class="faq-a">Yes. Sonder Consulting helps businesses put AI to work — from strategy and workflow automation to custom AI tools built around how you operate. We help companies cut busywork and integrate AI where it actually moves the needle.</p>
       </div>
-      <div class="faq-item">
+      <div class="faq-item reveal">
         <h3 class="faq-q">How do I start a project with Sonder Project?</h3>
         <p class="faq-a">Book a call and we'll talk through your goals. We're selective about who we work with, so every engagement starts with a conversation to make sure it's the right fit.</p>
       </div>
@@ -2124,6 +2316,71 @@ sections.forEach(s => obs.observe(s));
   }
 });
 
+// ─── CURSOR-REACTIVE GLOW (desktop only) ───────────────────────────
+if (!isTouch) {
+  const glow = document.getElementById('cursor-glow');
+  if (glow) {
+    let gx = window.innerWidth / 2, gy = window.innerHeight / 2;
+    let tx = gx, ty = gy, shown = false;
+    window.addEventListener('pointermove', e => {
+      tx = e.clientX; ty = e.clientY;
+      if (!shown) { glow.style.opacity = '1'; shown = true; }
+    }, { passive: true });
+    (function follow() {
+      gx += (tx - gx) * 0.12;
+      gy += (ty - gy) * 0.12;
+      glow.style.transform = `translate(${gx}px, ${gy}px)`;
+      requestAnimationFrame(follow);
+    })();
+  }
+}
+
+// ─── SCROLL-REVEAL STAGGER ─────────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+if (revealEls.length) {
+  const revObs = new IntersectionObserver((entries, o) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      // Stagger by position among reveal siblings sharing the same parent
+      const parent = e.target.parentElement;
+      const group = Array.from(parent.querySelectorAll(':scope > .reveal'));
+      const idx = Math.max(0, group.indexOf(e.target));
+      e.target.style.transitionDelay = (idx * 90) + 'ms';
+      e.target.classList.add('reveal-in');
+      o.unobserve(e.target);
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach(el => revObs.observe(el));
+}
+
+// ─── STATS COUNT-UP ────────────────────────────────────────────────
+const statsSection = document.getElementById('stats');
+if (statsSection) {
+  let counted = false;
+  const animateCount = (el) => {
+    const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    const suffix = el.getAttribute('data-suffix') || '';
+    const dur = 1400;
+    const start = performance.now();
+    const step = (now) => {
+      const p = clamp((now - start) / dur, 0, 1);
+      const eased = 1 - Math.pow(1 - p, 3);   // easeOutCubic
+      el.textContent = Math.round(target * eased) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !counted) {
+        counted = true;
+        statsSection.querySelectorAll('.stat-num').forEach(animateCount);
+      }
+    });
+  }, { threshold: 0.4 });
+  statObs.observe(statsSection);
+}
+
 // ─── TWEAKS ────────────────────────────────────────────────────────
 function applyDensity(val) {
   PARTICLE_COUNT = parseInt(val);
@@ -2155,19 +2412,26 @@ window.parent.postMessage({type: '__edit_mode_available'}, '*');
 // ─── INIT ──────────────────────────────────────────────────────────
 window.addEventListener('resize', () => { resizeCanvas(); });
 
-// Wait for Outfit font to load before sampling, for accurate text pixels
-if (document.fonts) {
-  document.fonts.ready.then(() => {
-    resizeCanvas();
-    initParticles();
-    requestAnimationFrame(render);
-    onScroll();
-  });
-} else {
+// Page-load intro veil — hold briefly so the mark animation reads, then fade
+function dismissIntro() {
+  setTimeout(() => document.body.classList.add('loaded'), 700);
+}
+
+function boot() {
   resizeCanvas();
   initParticles();
   requestAnimationFrame(render);
   onScroll();
+  dismissIntro();
+}
+
+// Wait for Outfit font to load before sampling, for accurate text pixels
+if (document.fonts) {
+  document.fonts.ready.then(boot);
+  // Safety: never let the veil get stuck if fonts hang
+  setTimeout(() => document.body.classList.add('loaded'), 2500);
+} else {
+  boot();
 }
 </script>
 
