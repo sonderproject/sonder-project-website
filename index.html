@@ -1614,13 +1614,39 @@ footer {
 <script>
 // ─── CONFIG ────────────────────────────────────────────────────────
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "particleCount": 400,
+  "particleCount": 800,
   "headlineStyle": "upright",
   "colorMode": "mixed"
 }/*EDITMODE-END*/;
 
 let PARTICLE_COUNT = TWEAK_DEFAULTS.particleCount;
 let COLOR_MODE = TWEAK_DEFAULTS.colorMode;
+
+// ─── AMBIENT AURORA ORBS (background depth so it never feels empty) ───
+// Soft, slow-drifting nebula painted under the particles. Brand teal with
+// a touch of indigo + magenta for subtle iridescence (echoes the nav aurora).
+const auroraOrbs = [
+  { hue: '62,155,212',  bx: 0.20, by: 0.28, rad: 0.62, ax: 0.06, ay: 0.05, sx: 0.013, sy: 0.017, a: 0.11 },
+  { hue: '120,110,255', bx: 0.82, by: 0.20, rad: 0.52, ax: 0.07, ay: 0.06, sx: 0.011, sy: 0.009, a: 0.07 },
+  { hue: '64,205,224',  bx: 0.70, by: 0.74, rad: 0.66, ax: 0.05, ay: 0.07, sx: 0.009, sy: 0.013, a: 0.085 },
+  { hue: '255,120,170', bx: 0.30, by: 0.84, rad: 0.46, ax: 0.06, ay: 0.05, sx: 0.012, sy: 0.010, a: 0.05 },
+];
+
+function drawAurora(t) {
+  ctx.globalCompositeOperation = 'lighter';
+  for (const o of auroraOrbs) {
+    const cx = (o.bx + Math.sin(t * o.sx + o.bx * 6) * o.ax) * W;
+    const cy = (o.by + Math.cos(t * o.sy + o.by * 6) * o.ay) * H;
+    const rr = o.rad * Math.max(W, H);
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr);
+    g.addColorStop(0, `rgba(${o.hue},${o.a})`);
+    g.addColorStop(0.6, `rgba(${o.hue},${o.a * 0.35})`);
+    g.addColorStop(1, `rgba(${o.hue},0)`);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+}
 
 // ─── CANVAS SETUP ──────────────────────────────────────────────────
 const canvas = document.getElementById('particle-canvas');
@@ -1717,8 +1743,8 @@ function mkParticle(i) {
     : { x: W / 2, y: H / 2 };
 
   // Add slight random jitter to text position for organic feel
-  const tx = tp.x + (Math.random() - 0.5) * 2;
-  const ty = tp.y + (Math.random() - 0.5) * 2;
+  const tx = tp.x + (Math.random() - 0.5) * 1.1;
+  const ty = tp.y + (Math.random() - 0.5) * 1.1;
 
   return {
     sx, sy, sdx, sdy, starAlpha, twinklePhase, twinkleFreq,
@@ -1782,6 +1808,7 @@ function render(ts) {
   ctx.fillRect(0, 0, W, H);
   const sp = smoothstep(scrollProgress);
   const t = ts * 0.001;
+  drawAurora(t);
 
   particles.forEach(p => {
     p.t += dt * 0.001;
@@ -1807,7 +1834,7 @@ function render(ts) {
       const textY = p.ty + Math.cos(p.t * 0.6 + p.twinklePhase) * 0.4;
       x = lerp(textX, p.rx, rp);
       y = lerp(textY, p.ry, rp);
-      const textBreathe = 0.82 + 0.15 * (0.5 + 0.5 * Math.sin(p.t * 1.2 + p.twinklePhase));
+      const textBreathe = 0.92 + 0.08 * (0.5 + 0.5 * Math.sin(p.t * 1.2 + p.twinklePhase));
       const relBreathe = p.releaseAlpha * (0.5 + 0.5 * Math.sin(p.t * p.releaseFreq * 6.28 + p.releasePhase));
       alpha = lerp(textBreathe, relBreathe, rp);
     } else if (pp < 0.001) {
@@ -1824,9 +1851,9 @@ function render(ts) {
     } else if (pp > 0.999) {
       // Pure text — subtle breathe
       const breathe = 0.5 + 0.5 * Math.sin(p.t * 1.2 + p.twinklePhase);
-      x = p.tx + Math.sin(p.t * 0.8 + p.twinklePhase) * 0.4;
-      y = p.ty + Math.cos(p.t * 0.6 + p.twinklePhase) * 0.4;
-      alpha = 0.82 + 0.15 * breathe;
+      x = p.tx + Math.sin(p.t * 0.8 + p.twinklePhase) * 0.3;
+      y = p.ty + Math.cos(p.t * 0.6 + p.twinklePhase) * 0.3;
+      alpha = 0.92 + 0.08 * breathe;
     } else {
       // Transition — star drifts slower as pp increases, text pulls in
       p.sx += p.sdx * (1 - pp);
@@ -1840,7 +1867,7 @@ function render(ts) {
       y = lerp(p.sy, p.ty, pp);
 
       const twinkle = 0.5 + 0.5 * Math.sin(p.t * p.twinkleFreq * 6.28 + p.twinklePhase);
-      alpha = lerp(p.starAlpha * (0.55 + 0.45 * twinkle), 0.92, pp);
+      alpha = lerp(p.starAlpha * (0.55 + 0.45 * twinkle), 0.97, pp);
     }
 
     // Color
@@ -1851,18 +1878,20 @@ function render(ts) {
       colorStr = `rgba(255,255,255,${alpha})`;
     }
 
-    // Draw dot
+    // Draw dot — formed letters render slightly larger for crisper legibility
+    const formed = pp > 0.999 && releaseProgress < 0.5;
+    const drawR = formed ? p.r * 1.3 : p.r;
     ctx.beginPath();
-    ctx.arc(x, y, p.r, 0, Math.PI * 2);
+    ctx.arc(x, y, drawR, 0, Math.PI * 2);
     ctx.fillStyle = colorStr;
     ctx.fill();
 
     // Subtle glow on larger particles
-    if (p.r > 0.7 && alpha > 0.2) {
-      const gr = p.r * (pp > 0.999 ? 4.5 : 3.5);
+    if (p.r > 0.6 && alpha > 0.2) {
+      const gr = drawR * (formed ? 5 : 3.5);
       const g = ctx.createRadialGradient(x, y, 0, x, y, gr);
       const gc = p.isTeal ? '62,155,212' : '255,255,255';
-      const glowAlpha = pp > 0.999 ? alpha * 0.45 : alpha * 0.25;
+      const glowAlpha = formed ? alpha * 0.55 : alpha * 0.25;
       g.addColorStop(0, `rgba(${gc},${glowAlpha})`);
       g.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.beginPath();
