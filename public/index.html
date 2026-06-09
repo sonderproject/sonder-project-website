@@ -1860,6 +1860,25 @@ a:focus-visible, button:focus-visible {
   .section-cta::before, .cta-btn::before { animation: none; }
 }
 
+/* ─── EDGE GLOW — ambient side lighting ─── */
+#edge-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background:
+    radial-gradient(ellipse 34% 90% at 0% 36%, rgba(237,233,227,0.055) 0%, transparent 100%),
+    radial-gradient(ellipse 34% 90% at 100% 64%, rgba(237,233,227,0.055) 0%, transparent 100%);
+  animation: edgeGlowBreathe 7s ease-in-out infinite;
+}
+@keyframes edgeGlowBreathe {
+  0%, 100% { opacity: 0.65; }
+  50%       { opacity: 1;    }
+}
+@media (prefers-reduced-motion: reduce) {
+  #edge-glow { animation: none; opacity: 0.8; }
+}
+
 /* ─── PAGE-LOAD INTRO VEIL ─── */
 #intro-veil {
   position: fixed;
@@ -2142,6 +2161,7 @@ body.loaded #intro-veil {
 </nav>
 
 <canvas id="particle-canvas"></canvas>
+<div id="edge-glow" aria-hidden="true"></div>
 
 <div id="hero-photo">
   <img src="/hero.webp" alt="Coastal city skyline across the water at dusk — Sonder Project premium digital studio" width="2000" height="1200" />
