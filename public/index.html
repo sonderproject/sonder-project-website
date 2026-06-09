@@ -141,8 +141,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="preload" as="image" href="/hero.webp" fetchpriority="high">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
 <style>/* latin-ext */
 @font-face {
   font-family: 'Bebas Neue';
@@ -1556,7 +1555,9 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 .faq-list {
   display: grid;
   gap: 12px;
+  contain: layout;
 }
+.why-grid, .why-compare, .stats-row { contain: layout; }
 .faq-item {
   padding: 26px 30px;
   border-radius: 14px;
@@ -2075,6 +2076,12 @@ body.loaded #intro-veil {
   .seal-ring { width: 210px; height: 210px; }
   .seal-monogram { font-size: 120px; }
 
+  /* Reduce backdrop-filter cost on mobile — blur 28px -> 14px is ~4x cheaper on GPU */
+  .faq-item, .why-card, .stat, .compare-col, .why-kicker {
+    backdrop-filter: blur(14px) saturate(1.5);
+    -webkit-backdrop-filter: blur(14px) saturate(1.5);
+  }
+
   /* Why-a-designer — 3 cols down to 2 on tablet */
   #why-design { padding-top: 52px; padding-bottom: 52px; }
   .why-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -2508,8 +2515,11 @@ const auroraOrbs = [
   { hue: '255,120,170', bx: 0.30, by: 0.84, rad: 0.44, ax: 0.06, ay: 0.05, sx: 0.012, sy: 0.010, a: 0.028, pz: 60 },
 ];
 
+let _auroraFrame = 0;
 function drawAurora(t, px, py, intensity) {
   if (intensity <= 0.01) return;
+  // At low intensity (hero transition), skip every other frame — halves gradient allocations
+  if (intensity < 0.25 && (++_auroraFrame & 1)) return;
   ctx.globalCompositeOperation = 'lighter';
   for (const o of auroraOrbs) {
     const cx = (o.bx + Math.sin(t * o.sx + o.bx * 6) * o.ax) * W + px * o.pz;
@@ -2532,7 +2542,11 @@ const ctx = canvas.getContext('2d');
 let W, H, dpr;
 
 function resizeCanvas() {
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Cap DPR at 1.5 on mobile — reduces canvas pixels ~44% on 3× screens with no visible loss
+  dpr = isMobileViewport()
+    ? Math.min(window.devicePixelRatio || 1, 1.5)
+    : Math.min(window.devicePixelRatio || 1, 2);
+  _driverH = 0; // invalidate cached scroll-driver height
   W = window.innerWidth;
   H = window.innerHeight;
   canvas.width = W * dpr;
@@ -2703,11 +2717,22 @@ function smoothstep(t) { return t * t * (3 - 2 * t); }
 function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
 
 // ─── SCROLL PROGRESS ───────────────────────────────────────────────
+// Cache driver height — offsetHeight forces a layout flush every call
+let _driverH = 0;
 function getRawScrollProgress() {
-  const driver = document.getElementById('scroll-driver');
-  const driverH = driver.offsetHeight - window.innerHeight;
-  return clamp(window.scrollY / Math.max(1, driverH), 0, 1);
+  if (!_driverH) {
+    const driver = document.getElementById('scroll-driver');
+    _driverH = Math.max(1, driver.offsetHeight - window.innerHeight);
+  }
+  return clamp(window.scrollY / _driverH, 0, 1);
 }
+
+// ─── PAGE VISIBILITY — pause RAF when tab is hidden ────────────────
+let _rafPaused = false;
+document.addEventListener('visibilitychange', () => {
+  _rafPaused = document.hidden;
+  if (!_rafPaused) requestAnimationFrame(render);
+});
 
 // ─── RENDER ────────────────────────────────────────────────────────
 let scrollProgress = 0;
@@ -2716,6 +2741,7 @@ let lastTime = 0;
 let heroPhotoFade = 1;   // 1 = backdrop fully visible, 0 = dissolved
 
 function render(ts) {
+  if (_rafPaused) return;
   const dt = Math.min(ts - lastTime, 50);
   lastTime = ts;
   scrollProgress += (targetScrollProgress - scrollProgress) * 0.05;
@@ -2823,7 +2849,8 @@ function render(ts) {
 
     // Queue glowing particles for a single batched shadowBlur pass below —
     // avoids creating a RadialGradient object per particle per frame.
-    const glowOk = alpha > 0.2 && (isMobileViewport()
+    const glowCap = isMobileViewport() ? 60 : 220;
+    const glowOk = alpha > 0.2 && glowQueue.length < glowCap && (isMobileViewport()
       ? (formed && p.r > 0.62)
       : (formed || p.r > 0.62));
     if (glowOk) {
@@ -2857,27 +2884,31 @@ function render(ts) {
 
 
 // ─── SCROLL + REVEAL ───────────────────────────────────────────────
-const scrollHint = document.getElementById('scroll-hint');
-const sections = document.querySelectorAll('.content-section');
+// Cache every DOM ref used in the hot scroll path — getElementById on
+// every event is measurable; cached reads are free.
+const scrollHint   = document.getElementById('scroll-hint');
+const sections     = document.querySelectorAll('.content-section');
+const _heroPhoto   = document.getElementById('hero-photo');
+const _heroIntro   = document.getElementById('hero-intro');
+const _mainNav     = document.getElementById('main-nav');
+const _studioSec   = document.getElementById('studio-section');
+const _consultSec  = document.getElementById('consulting-section');
+let _sectionsShown = false;
 
 function onScroll() {
   targetScrollProgress = getRawScrollProgress();
   scrollHint.style.opacity = Math.max(0, 1 - targetScrollProgress * 5);
-  if (targetScrollProgress > 0.88) {
+  if (!_sectionsShown && targetScrollProgress > 0.88) {
+    _sectionsShown = true;
     sections.forEach(s => s.classList.add('visible'));
-    const studio = document.getElementById('studio-section');
-    if (studio) studio.classList.add('visible');
-    const consulting = document.getElementById('consulting-section');
-    if (consulting) consulting.classList.add('visible');
+    if (_studioSec)  _studioSec.classList.add('visible');
+    if (_consultSec) _consultSec.classList.add('visible');
   }
-  const nav = document.getElementById('main-nav');
-  if (nav) nav.classList.toggle('scrolled', window.scrollY > 32);
+  _mainNav.classList.toggle('scrolled', window.scrollY > 32);
   // Dissolve the cinematic backdrop + intro copy as the wordmark forms
   heroPhotoFade = Math.max(0, 1 - targetScrollProgress * 2.8);
-  const heroPhoto = document.getElementById('hero-photo');
-  if (heroPhoto) heroPhoto.style.opacity = heroPhotoFade;
-  const heroIntro = document.getElementById('hero-intro');
-  if (heroIntro) heroIntro.style.opacity = heroPhotoFade;
+  if (_heroPhoto) _heroPhoto.style.opacity = heroPhotoFade;
+  if (_heroIntro) _heroIntro.style.opacity = heroPhotoFade;
   // Particles stay hidden on the untouched photo, then bloom in as you scroll
   canvas.style.opacity = Math.min(1, targetScrollProgress * 3.5);
 }
