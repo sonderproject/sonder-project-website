@@ -1409,8 +1409,38 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
   opacity: 1;
   transform: translateY(0);
 }
-/* Promo graphic carries its own copy — frame the phones */
-#threads-section .studio-visual-img { object-position: 78% center; }
+/* Showcase card — full promo image on top (uncropped), copy row below */
+.studio-card.showcase { grid-template-columns: 1fr; }
+.studio-card.showcase .studio-card-visual {
+  order: -1;
+  min-height: 0;
+  height: auto;
+  aspect-ratio: 1672 / 941;
+  border-left: none;
+  border-bottom: 1px solid rgba(62,155,212,0.08);
+}
+.studio-card.showcase .studio-visual-img { object-position: center; }
+.studio-card.showcase .studio-visual-overlay {
+  background: linear-gradient(to bottom, rgba(10,10,9,0) 75%, rgba(10,10,9,0.35) 100%);
+}
+.studio-card.showcase .studio-card-body {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  align-items: end;
+  gap: 32px 64px;
+  padding: 52px 64px 56px;
+}
+.studio-card.showcase .studio-card-body > div:first-child { grid-row: 1 / span 2; }
+.studio-card.showcase .studio-card-desc { max-width: 480px; }
+.studio-card.showcase .section-cta { justify-self: start; }
+@media (max-width: 900px) {
+  .studio-card.showcase .studio-card-body {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 36px 28px;
+  }
+  .studio-card.showcase .studio-card-body > div:first-child { grid-row: auto; }
+}
 
 /* ─── FAQ ─── */
 #faq {
@@ -2311,7 +2341,7 @@ body.loaded #intro-veil {
   <section id="threads-section">
     <div class="studio-inner">
       <div class="section-eyebrow">Productivity Tools</div>
-      <div class="studio-card reversed">
+      <div class="studio-card showcase">
         <div class="studio-card-body">
           <div>
             <div class="studio-card-label">Sonder Threads · sonderthreads.com</div>
