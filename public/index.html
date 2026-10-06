@@ -81,6 +81,14 @@
       "serviceType": ["AI Consulting", "Business Automation", "Workflow Design", "Custom AI Tools"]
     },
     {
+      "@type": "SoftwareApplication",
+      "name": "Sonder Threads",
+      "url": "https://sonderthreads.com",
+      "applicationCategory": "ProductivityApplication",
+      "publisher": { "@id": "https://www.sonderproject.co/#organization" },
+      "description": "An all-in-one organization tool — tasks, to-do lists, notes, people, and notifications in one place."
+    },
+    {
       "@type": "FAQPage",
       "@id": "https://www.sonderproject.co/#faq",
       "mainEntity": [
@@ -113,7 +121,7 @@
           "name": "What services does Sonder Project offer?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built with no templates."
+            "text": "Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built with no templates. We also make Sonder Threads (sonderthreads.com), an organization tool for tasks, to-do lists, notes, people, and notifications."
           }
         },
         {
@@ -1391,6 +1399,17 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 }
 .studio-card.reversed .studio-visual-img { object-position: center 60%; }
 
+/* ─── Threads section (reuses studio-card system) ─── */
+#threads-section {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1s ease 0.16s, transform 1s ease 0.16s;
+}
+#threads-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ─── FAQ ─── */
 #faq {
   padding-top: 60px;
@@ -2172,6 +2191,7 @@ body.loaded #intro-veil {
   <div class="nav-links">
     <a href="#studio-section" class="nav-link">Studio</a>
     <a href="#consulting-section" class="nav-link">Consulting</a>
+    <a href="#threads-section" class="nav-link">Threads</a>
     <a href="#cta" class="nav-link">Contact</a>
     <a href="https://sonderstudio.space" class="nav-studio-pill" target="_blank">Sonder Studio ↗</a>
     <a href="https://cal.com/dante-valentino/ai-consulting" class="nav-cta-pill" target="_blank">Free AI Call</a>
@@ -2353,6 +2373,40 @@ body.loaded #intro-veil {
     </div>
   </section>
 
+  <section id="threads-section">
+    <div class="studio-inner">
+      <div class="section-eyebrow">Productivity Tools</div>
+      <div class="studio-card">
+        <div class="studio-card-body">
+          <div>
+            <div class="studio-card-label">Sonder Threads · sonderthreads.com</div>
+            <div class="studio-card-name">Your Whole Day, in One Thread</div>
+            <p class="studio-card-desc">Sonder Threads pulls your tasks, to-do lists, notes, people, and notifications into one clean workspace. No more juggling five apps to stay on top of your work — everything you need to track lives in one place.</p>
+          </div>
+          <div class="studio-tags">
+            <span class="studio-tag">Tasks &amp; To-Dos</span>
+            <span class="studio-tag">Notes</span>
+            <span class="studio-tag">People</span>
+            <span class="studio-tag">Notifications</span>
+          </div>
+          <a href="https://sonderthreads.com" class="section-cta" target="_blank">
+            <span class="cta-label">Visit Sonder Threads</span>
+            <span class="cta-arrow">↗</span>
+          </a>
+        </div>
+        <div class="studio-card-visual">
+          <!-- Placeholder image — swap for a Sonder Threads visual -->
+          <img src="/hero.webp" alt="Sonder Threads — organization tool for tasks, notes, people, and notifications" class="studio-visual-img" loading="lazy" />
+          <div class="studio-visual-overlay"></div>
+          <div class="studio-visual-copy">
+            <div class="studio-visual-copy-headline">Stop losing track of what matters.</div>
+            <div class="studio-visual-copy-sub">Keep it all in one thread.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="content-section" id="why-design">
     <div class="section-eyebrow reveal">Why Not Just Use AI?</div>
     <h2 class="why-headline reveal">AI can build a website. It can't <em>design</em> one that converts.</h2>
@@ -2429,7 +2483,7 @@ body.loaded #intro-veil {
       </div>
       <div class="faq-item reveal">
         <h3 class="faq-q">What services do you offer?</h3>
-        <p class="faq-a">Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built — we don't use templates.</p>
+        <p class="faq-a">Premium custom web design and development, AI tools and integrations, real estate marketing websites, brand identity, and bespoke digital products. Every project is custom-built — we don't use templates. We also make <a href="https://sonderthreads.com" target="_blank">Sonder Threads</a>, an organization tool for tasks, to-do lists, notes, people, and notifications.</p>
       </div>
       <div class="faq-item reveal">
         <h3 class="faq-q">Does Sonder Project offer AI consulting?</h3>
@@ -2893,6 +2947,7 @@ const _heroIntro   = document.getElementById('hero-intro');
 const _mainNav     = document.getElementById('main-nav');
 const _studioSec   = document.getElementById('studio-section');
 const _consultSec  = document.getElementById('consulting-section');
+const _threadsSec  = document.getElementById('threads-section');
 let _sectionsShown = false;
 
 function onScroll() {
@@ -2903,6 +2958,7 @@ function onScroll() {
     sections.forEach(s => s.classList.add('visible'));
     if (_studioSec)  _studioSec.classList.add('visible');
     if (_consultSec) _consultSec.classList.add('visible');
+    if (_threadsSec) _threadsSec.classList.add('visible');
   }
   _mainNav.classList.toggle('scrolled', window.scrollY > 32);
   // Dissolve the cinematic backdrop + intro copy as the wordmark forms
@@ -2931,8 +2987,8 @@ const obs = new IntersectionObserver(entries => {
 }, { threshold: 0.15 });
 sections.forEach(s => obs.observe(s));
 
-// Studio + consulting section reveal
-['studio-section', 'consulting-section'].forEach(id => {
+// Studio + consulting + threads section reveal
+['studio-section', 'consulting-section', 'threads-section'].forEach(id => {
   const el = document.getElementById(id);
   if (el) {
     const revealObs = new IntersectionObserver(entries => {
