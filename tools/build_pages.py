@@ -15,7 +15,7 @@ PROTOCOL = "https://sonderprotocol.vercel.app"
 ORG_ID = SITE + "/#organization"
 
 NAV = [("/surfdesk", "Surfdesk"), ("/web-design", "Websites"), ("/ai-consulting", "AI"),
-       ("/sonder-protocol", "Protocol"), ("/about", "About")]
+       ("/guides", "Guides"), ("/about", "About")]
 
 CSS = """
 @font-face{font-family:'Inter';font-style:normal;font-weight:300 700;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2')}
@@ -170,7 +170,7 @@ def page(slug, title, desc, body, schema, crumb, og_image="/og-image.jpg", theme
 </main>
 <footer><div class="wrap">
   <div>&copy; 2026 Sonder Project &middot; San Diego, California</div>
-  <nav aria-label="Footer"><a href="/">Home</a><a href="/surfdesk">Surfdesk</a><a href="/web-design">Web design</a><a href="/ai-consulting">AI consulting</a><a href="/sonder-protocol">Sonder Protocol</a><a href="/about">About</a><a href="{CAL}" rel="noopener">Book a call</a></nav>
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/surfdesk">Surfdesk</a><a href="/web-design">Web design</a><a href="/ai-consulting">AI consulting</a><a href="/sonder-protocol">Sonder Protocol</a><a href="/guides">Guides</a><a href="/about">About</a><a href="{CAL}" rel="noopener">Book a call</a></nav>
 </div></footer>
 </body>
 </html>

@@ -12,6 +12,13 @@ Pages:
 - AI consulting in San Diego (Sonder Consulting): https://www.sonderproject.co/ai-consulting
 - Sonder Protocol: https://www.sonderproject.co/sonder-protocol
 - About: https://www.sonderproject.co/about
+- Guides: https://www.sonderproject.co/guides
+  - How much does a website cost in San Diego?: https://www.sonderproject.co/guides/website-cost-san-diego
+  - What every real estate agent website needs: https://www.sonderproject.co/guides/real-estate-agent-website
+  - 7 things a small business can automate with AI: https://www.sonderproject.co/guides/ai-automation-small-business
+  - AI website builder vs web designer: https://www.sonderproject.co/guides/ai-website-builder-vs-web-designer
+  - How to write a nonprofit impact report: https://www.sonderproject.co/guides/nonprofit-impact-report
+  - Power outage checklist: https://www.sonderproject.co/guides/power-outage-checklist
 Instagram: https://www.instagram.com/sonderproject.co/
 Try Surfdesk: https://thesurfdesk.app
 Contact / book a call: https://cal.com/dante-valentino/ai-consulting

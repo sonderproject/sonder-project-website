@@ -2359,6 +2359,7 @@ body.loaded #intro-veil {
         <a href="https://sonderprotocol.vercel.app" class="footer-link" target="_blank" rel="noopener">Sonder Protocol</a>
         <a href="/web-design" class="footer-link">Web Design San Diego</a>
         <a href="/ai-consulting" class="footer-link">AI Consulting</a>
+        <a href="/guides" class="footer-link">Guides</a>
         <a href="/about" class="footer-link">About</a>
         <a href="https://www.instagram.com/sonderproject.co/" class="footer-link" target="_blank" rel="noopener">Instagram</a>
         <a href="#cta" class="footer-link">Contact</a>
@@ -2600,7 +2601,7 @@ function getRawScrollProgress() {
 let _rafPaused = false;
 document.addEventListener('visibilitychange', () => {
   _rafPaused = document.hidden;
-  if (!_rafPaused) requestAnimationFrame(render);
+  if (!_rafPaused && _particlesStarted) requestAnimationFrame(render);
 });
 
 // ─── RENDER ────────────────────────────────────────────────────────
@@ -2908,7 +2909,7 @@ if (statsSection) {
 let _resizeTid;
 window.addEventListener('resize', () => {
   clearTimeout(_resizeTid);
-  _resizeTid = setTimeout(resizeCanvas, 150);
+  _resizeTid = setTimeout(() => { if (_particlesStarted) resizeCanvas(); }, 150);
 });
 
 // Page-load intro veil — hold briefly so the mark animation reads, then fade
@@ -2916,12 +2917,23 @@ function dismissIntro() {
   setTimeout(() => document.body.classList.add('loaded'), 700);
 }
 
-function boot() {
+// The particle canvas is invisible until the visitor scrolls (its opacity is
+// tied to scroll progress), so don't spend main-thread time on it at load:
+// start it on the first scroll, or right away if the page opened mid-scroll.
+let _particlesStarted = false;
+function startParticles() {
+  if (_particlesStarted) return;
+  _particlesStarted = true;
   resizeCanvas();
   initParticles();
   requestAnimationFrame(render);
+}
+
+function boot() {
   onScroll();
   dismissIntro();
+  if (window.scrollY > 0) startParticles();
+  else window.addEventListener('scroll', startParticles, { once: true, passive: true });
 }
 
 // Wait for Outfit font to load before sampling, for accurate text pixels
