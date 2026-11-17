@@ -27,8 +27,10 @@ is custom-built, with no templates.
   itself for funders.
 - For small businesses and solo professionals: every regular, every service,
   every follow-up, and revenue by service.
-- Pricing: free for 7 days, then $9/month for individuals or from $19 per
-  staff member per month for teams.
+- Pricing: Individual $9/month (7-day free trial, no card needed); Small
+  Team $19/user/month for 2-18 people (14-day free trial); Organization
+  $349/month for 19+ with 20 seats included and extra seats $15/user/month;
+  Enterprise custom. Get started now for 30% off the first month.
 
 ## Services
 
@@ -50,4 +52,4 @@ is custom-built, with no templates.
 
 Start a project: book a free 30-minute call at
 https://cal.com/dante-valentino/ai-consulting
-Try Surfdesk free for 7 days: https://thesurfdesk.app
+Try Surfdesk free: https://thesurfdesk.app

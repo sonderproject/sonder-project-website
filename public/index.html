@@ -88,7 +88,11 @@
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "Web, iOS, Android",
       "publisher": { "@id": "https://www.sonderproject.co/#organization" },
-      "offers": { "@type": "Offer", "price": "9.00", "priceCurrency": "USD", "description": "Individual plan, per month, after a 7-day free trial" },
+      "offers": [
+        { "@type": "Offer", "name": "Individual", "price": "9.00", "priceCurrency": "USD", "description": "Per month, 7-day free trial, no card needed" },
+        { "@type": "Offer", "name": "Small Team", "price": "19.00", "priceCurrency": "USD", "description": "Per user per month, teams of 2-18, 14-day free trial" },
+        { "@type": "Offer", "name": "Organization", "price": "349.00", "priceCurrency": "USD", "description": "Per month, 20 seats included, additional seats $15/user/month" }
+      ],
       "description": "Surfdesk is the client tracker that keeps follow-ups from slipping and builds your reports for you. Say it once and it saves the note, sets the reminder and counts the outcome. For agencies, nonprofits, small businesses and solo professionals. By Sonder Project."
     },
     {
@@ -113,7 +117,7 @@
         {
           "@type": "Question",
           "name": "How much does Surfdesk cost?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Surfdesk is free for 7 days. After that it's $9 a month for individuals, or from $19 per staff member per month for teams." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Individual is $9 a month (7-day free trial, no card needed). Small Team is $19 per user per month for teams of 2–18. Organization is $349 a month with 20 seats included and extra seats at $15 each. Enterprise pricing is custom. Team plans come with a 14-day free trial." }
         },
         {
           "@type": "Question",
@@ -1153,20 +1157,27 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 .sd-list { list-style:none; display:grid; gap:10px; }
 .sd-list li { position:relative; padding-left:24px; font-family:var(--ff-sans); font-size:14.5px; font-weight:300; line-height:1.6; color:var(--text-dim); }
 .sd-list li::before { content:'✓'; position:absolute; left:0; top:0; color:var(--accent); font-weight:600; }
-.sd-pricing { display:grid; grid-template-columns:1fr 1fr 1.1fr; gap:16px; margin-top:16px; align-items:stretch; }
+.sd-pricing { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:16px; align-items:stretch; }
+.sd-plan { position:relative; padding:30px 26px; }
+.sd-plan-note { margin-top:14px; font-family:var(--ff-sans); font-size:12px; color:var(--accent); }
+.sd-plan-badge { position:absolute; top:16px; right:16px; font-family:var(--ff-sans); font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; padding:4px 10px; border-radius:999px; background:rgba(var(--accent-rgb),.16); color:#8fd0f5; }
 .sd-plan.featured { border-color:rgba(var(--accent-rgb),.45); box-shadow:var(--glass-highlight), 0 0 50px rgba(var(--accent-rgb),.14), var(--glass-shadow); }
-.sd-plan-price { font-family:var(--ff-display); font-size:44px; font-weight:600; letter-spacing:-.03em; color:var(--text); line-height:1; margin-bottom:12px; }
+.sd-plan-price { font-family:var(--ff-display); font-size:40px; font-weight:600; letter-spacing:-.03em; color:var(--text); line-height:1; margin-bottom:12px; }
 .sd-plan-price span { font-family:var(--ff-sans); font-size:13px; font-weight:300; letter-spacing:0; color:var(--text-dim); margin-left:4px; }
 .sd-plan-price small { font-family:var(--ff-sans); font-size:13px; font-weight:300; color:var(--text-dim); letter-spacing:0; }
 .sd-plan-desc { font-family:var(--ff-sans); font-size:14px; font-weight:300; line-height:1.6; color:var(--text-dim); }
-.sd-plan-cta { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:12px; padding:20px 8px 20px 20px; }
+.sd-plan-cta { display:flex; flex-direction:column; align-items:center; gap:12px; padding:32px 0 0; text-align:center; }
 .sd-plan-cta .cta-micro { margin:0; }
 .cta-alt { display:inline-block; margin-top:18px; font-family:var(--ff-sans); font-size:13px; color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(var(--accent-rgb),.35); padding-bottom:2px; transition:border-color .2s ease; }
 .cta-alt:hover { border-color:var(--accent); }
 @media (max-width: 900px) {
-  .sd-audience, .sd-pricing { grid-template-columns:1fr; }
+  .sd-audience { grid-template-columns:1fr; }
+  .sd-pricing { grid-template-columns:1fr 1fr; }
   .sd-aud, .sd-plan { padding:28px 24px; }
-  .sd-plan-cta { padding:12px 0 0; align-items:stretch; text-align:center; }
+  .sd-plan-cta { padding:24px 0 0; align-items:stretch; }
+}
+@media (max-width: 560px) {
+  .sd-pricing { grid-template-columns:1fr; }
   .sd-plan-cta .btn-primary { text-align:center; }
 }
 
@@ -2008,17 +2019,32 @@ body.loaded #intro-veil {
         <div class="sd-plan reveal">
           <div class="sd-plan-name">Individual</div>
           <div class="sd-plan-price">$9<span>/month</span></div>
-          <p class="sd-plan-desc">For freelancers, solo practitioners and owner-operators.</p>
+          <p class="sd-plan-desc">For one person with clients, projects or a busy life to keep straight.</p>
+          <p class="sd-plan-note">7-day free trial · no card needed</p>
+        </div>
+        <div class="sd-plan reveal">
+          <div class="sd-plan-name">Small Team</div>
+          <div class="sd-plan-price">$19<span>/user/month</span></div>
+          <p class="sd-plan-desc">For teams of 2–18. Shared workspace, roles and one bill.</p>
+          <p class="sd-plan-note">14-day free trial</p>
         </div>
         <div class="sd-plan featured reveal">
-          <div class="sd-plan-name">Teams</div>
-          <div class="sd-plan-price"><small>from</small> $19<span>/staff/month</span></div>
-          <p class="sd-plan-desc">Shared caseloads, outcome tracking and one-click impact reports.</p>
+          <div class="sd-plan-badge">Best value</div>
+          <div class="sd-plan-name">Organization</div>
+          <div class="sd-plan-price">$349<span>/month</span></div>
+          <p class="sd-plan-desc">For 19+. 20 seats included, extra seats $15. Team dashboard &amp; Impact reports.</p>
+          <p class="sd-plan-note">14-day free trial</p>
         </div>
-        <div class="sd-plan-cta reveal">
-          <a href="https://thesurfdesk.app" class="btn-primary" target="_blank" rel="noopener">Start Your 7-Day Free Trial</a>
-          <p class="cta-micro">Try every feature free for 7 days</p>
+        <div class="sd-plan reveal">
+          <div class="sd-plan-name">Enterprise</div>
+          <div class="sd-plan-price">Custom</div>
+          <p class="sd-plan-desc">Guided onboarding, data import, integrations and priority support.</p>
+          <p class="sd-plan-note">Tailored pricing &amp; terms</p>
         </div>
+      </div>
+      <div class="sd-plan-cta reveal">
+        <a href="https://thesurfdesk.app" class="btn-primary" target="_blank" rel="noopener">Start Your Free Trial</a>
+        <p class="cta-micro">Or get started now: 30% off your first month</p>
       </div>
     </div>
   </section>
@@ -2210,7 +2236,7 @@ body.loaded #intro-veil {
       </div>
       <div class="faq-item reveal">
         <h3 class="faq-q">How much does Surfdesk cost?</h3>
-        <p class="faq-a">Free for 7 days. Then $9 a month for individuals, or from $19 per staff member per month for teams.</p>
+        <p class="faq-a">Individual is $9 a month (7-day free trial, no card needed). Small Team is $19 per user per month for teams of 2–18. Organization is $349 a month with 20 seats included and extra seats at $15 each. Enterprise pricing is custom. Team plans come with a 14-day free trial.</p>
       </div>
       <div class="faq-item reveal">
         <h3 class="faq-q">What services do you offer?</h3>
@@ -2233,7 +2259,7 @@ body.loaded #intro-veil {
     <p class="cta-sub">A custom app. A website that converts. AI in your workflow. It all starts with one free conversation.</p>
     <a href="https://cal.com/dante-valentino/ai-consulting" class="cta-btn" target="_blank" rel="noopener"><span class="cta-label">Book Your Free Call</span></a>
     <p class="cta-micro">Free · 30 min · No commitment</p>
-    <a href="https://thesurfdesk.app" class="cta-alt" target="_blank" rel="noopener">Or start Surfdesk free for 7 days ↗</a>
+    <a href="https://thesurfdesk.app" class="cta-alt" target="_blank" rel="noopener">Or start a free Surfdesk trial ↗</a>
   </section>
 
   <footer>
