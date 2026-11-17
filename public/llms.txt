@@ -6,6 +6,13 @@
 > the cracks.
 
 Website: https://www.sonderproject.co
+Pages:
+- Surfdesk (features, pricing, FAQ): https://www.sonderproject.co/surfdesk
+- Web design in San Diego (Sonder Studio): https://www.sonderproject.co/web-design
+- AI consulting in San Diego (Sonder Consulting): https://www.sonderproject.co/ai-consulting
+- Sonder Protocol: https://www.sonderproject.co/sonder-protocol
+- About: https://www.sonderproject.co/about
+Instagram: https://www.instagram.com/sonderproject.co/
 Try Surfdesk: https://thesurfdesk.app
 Contact / book a call: https://cal.com/dante-valentino/ai-consulting
 

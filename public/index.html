@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- ─── PRIMARY SEO ─── -->
-<title>Sonder Project — Apps, Websites &amp; AI for Businesses | Makers of Surfdesk</title>
+<title>Sonder Project — Apps, Websites &amp; AI | Makers of Surfdesk</title>
 <meta name="description" content="Sonder Project is a creative digital agency building apps, websites and AI integrations for businesses — and the makers of Surfdesk, the client tracker that keeps every follow-up from slipping.">
 <meta name="keywords" content="Surfdesk, client tracker, case management app, follow-up reminders, app development, web design, AI integration, creative digital agency, Sonder Project, Sonder Studio">
 <meta name="author" content="Sonder Project">
@@ -23,8 +23,8 @@
 <meta property="og:title" content="Sonder Project — Apps, Websites & AI for Businesses">
 <meta property="og:description" content="Creative digital agency building apps, websites and AI for businesses. Makers of Surfdesk — the client tracker where nothing falls through the cracks.">
 <meta property="og:url" content="https://www.sonderproject.co/">
-<meta property="og:image" content="https://www.sonderproject.co/og-image.png">
-<meta property="og:image:type" content="image/png">
+<meta property="og:image" content="https://www.sonderproject.co/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Sonder Project — Apps, Websites & AI for Businesses">
@@ -34,7 +34,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sonder Project — Apps, Websites & AI for Businesses">
 <meta name="twitter:description" content="Creative digital agency building apps, websites and AI for businesses. Makers of Surfdesk — the client tracker where nothing falls through the cracks.">
-<meta name="twitter:image" content="https://www.sonderproject.co/og-image.png">
+<meta name="twitter:image" content="https://www.sonderproject.co/og-image.jpg">
 
 <!-- ─── STRUCTURED DATA ─── -->
 <script type="application/ld+json">
@@ -48,12 +48,16 @@
       "url": "https://www.sonderproject.co/",
       "description": "Creative digital agency building apps, websites and AI integrations for businesses. Makers of Surfdesk.",
       "logo": "https://www.sonderproject.co/logo-mark.png",
-      "image": "https://www.sonderproject.co/og-image.png",
-      "subOrganization": {
-        "@type": "Organization",
-        "name": "Sonder Studio",
-        "url": "https://sonderstudio.space"
-      },
+      "image": "https://www.sonderproject.co/og-image.jpg",
+      "sameAs": ["https://www.instagram.com/sonderproject.co/"],
+      "address": { "@type": "PostalAddress", "addressLocality": "San Diego", "addressRegion": "CA", "addressCountry": "US" },
+      "areaServed": [{ "@type": "City", "name": "San Diego" }, { "@type": "Country", "name": "United States" }],
+      "knowsAbout": ["Web design", "App development", "AI consulting", "Business automation", "Client management software"],
+      "subOrganization": [
+        { "@type": "Organization", "name": "Sonder Studio", "url": "https://sonderstudio.space" },
+        { "@type": "Organization", "name": "Sonder Consulting", "url": "https://www.sonderproject.co/ai-consulting" },
+        { "@type": "Organization", "name": "Sonder Protocol", "url": "https://sonderprotocol.vercel.app" }
+      ],
       "makesOffer": { "@type": "Offer", "itemOffered": { "@type": "SoftwareApplication", "name": "Surfdesk", "url": "https://thesurfdesk.app" } }
     },
     {
@@ -1253,6 +1257,10 @@ nav.scrolled .nav-aurora { opacity: 0.9; }
 }
 @media (prefers-reduced-motion: reduce) { .band-img { transform:none; } }
 
+.more-link { justify-self:start; align-self:start; width:fit-content; display:inline-block; margin-top:14px; font-family:var(--ff-sans); font-size:13px; color:var(--accent); text-decoration:none; border-bottom:1px solid rgba(var(--accent-rgb),.35); padding-bottom:2px; }
+.more-link:hover { border-color:var(--accent); }
+.band-row .more-link, .sd-plan-cta .more-link { margin-top:0; }
+.footer-links { flex-wrap:wrap; }
 /* ─── FAQ ─── */
 .faq-a a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(var(--accent-rgb),.35); }
 .faq-a a:hover { border-color: var(--accent); }
@@ -2079,6 +2087,7 @@ body.loaded #intro-veil {
             <span class="cta-label">Start your free trial</span>
             <span class="cta-arrow">↗</span>
           </a>
+          <a href="/surfdesk" class="more-link">Surfdesk features &amp; pricing →</a>
         </div>
         <div class="studio-card-visual">
           <img src="/surfdesk.webp" alt="Surfdesk on three phones: the People list, Home with today's follow-ups, and the Impact report with outcomes" class="studio-visual-img" width="1672" height="941" loading="lazy" />
@@ -2172,6 +2181,7 @@ body.loaded #intro-veil {
         <div class="band-row">
           <a href="https://sonderstudio.space" class="section-cta" target="_blank" rel="noopener"><span class="cta-label">Visit Sonder Studio</span><span class="cta-arrow">↗</span></a>
           <div class="band-tags"><span>Web Design</span><span>Real Estate</span><span>Brand Identity</span><span>AI Integration</span></div>
+          <a href="/web-design" class="more-link">Web design in San Diego →</a>
         </div>
       </div>
     </div>
@@ -2186,6 +2196,7 @@ body.loaded #intro-veil {
           <p class="consult-desc">Most businesses know AI matters &mdash; few know where to start. We find the busywork, automate it, and build the tools that actually move the needle, around how you already operate.</p>
           <a href="https://cal.com/dante-valentino/ai-consulting" class="section-cta" target="_blank" rel="noopener"><span class="cta-label">Book a Free AI Call</span><span class="cta-arrow">↗</span></a>
           <p class="cta-micro">Free · 30 min · No pressure</p>
+          <a href="/ai-consulting" class="more-link">How our AI consulting works →</a>
         </div>
         <ol class="consult-steps">
           <li class="reveal"><span class="cs-num">01</span><div><h3>Strategy</h3><p>Where AI pays off in your business &mdash; and where it doesn&rsquo;t.</p></div></li>
@@ -2206,6 +2217,7 @@ body.loaded #intro-veil {
           <h2 class="protocol-title" id="protocol-title">When the power goes out, know exactly what to do.</h2>
           <p class="protocol-desc">The 30-Day Blackout Playbook: one 42-page household plan &mdash; what to buy, how much, and what to do hour by hour. Prepared, not paranoid.</p>
           <a href="https://sonderprotocol.vercel.app" class="protocol-cta" target="_blank" rel="noopener">Get the Playbook ↗</a>
+          <a href="/sonder-protocol" class="more-link">What&rsquo;s in the Playbook →</a>
         </div>
       </div>
     </div>
@@ -2342,9 +2354,13 @@ body.loaded #intro-veil {
     <div class="footer-left">
       <div class="footer-logo"><img src="/logo-white.png" alt="Sonder Project" class="footer-logo-mark">Sonder Project</div>
       <div class="footer-links">
-        <a href="https://thesurfdesk.app" class="footer-link" target="_blank" rel="noopener">Surfdesk</a>
+        <a href="/surfdesk" class="footer-link">Surfdesk</a>
         <a href="https://sonderstudio.space" class="footer-link" target="_blank" rel="noopener">Sonder Studio</a>
         <a href="https://sonderprotocol.vercel.app" class="footer-link" target="_blank" rel="noopener">Sonder Protocol</a>
+        <a href="/web-design" class="footer-link">Web Design San Diego</a>
+        <a href="/ai-consulting" class="footer-link">AI Consulting</a>
+        <a href="/about" class="footer-link">About</a>
+        <a href="https://www.instagram.com/sonderproject.co/" class="footer-link" target="_blank" rel="noopener">Instagram</a>
         <a href="#cta" class="footer-link">Contact</a>
       </div>
     </div>
