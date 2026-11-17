@@ -40,6 +40,10 @@ is custom-built, with no templates.
   conversion-focused design.
 - **Sonder Consulting**: AI strategy, workflow automation, AI integration and
   custom AI tools for businesses.
+- **Sonder Protocol** (https://sonderprotocol.vercel.app): household
+  preparedness guides. Protocol 001 is The 30-Day Blackout Playbook, a
+  42-page plan for power outages: what to buy, how much, and what to do hour
+  by hour.
 
 ## Who It's For
 
