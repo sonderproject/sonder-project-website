@@ -128,7 +128,10 @@ def page(slug, title, desc, body, schema, crumb, og_image="/og-image.jpg", theme
 <meta name="robots" content="{'noindex' if slug == '404' else 'index, follow, max-image-preview:large'}">
 <meta name="theme-color" content="#0A0A09">
 {'' if slug == '404' else f'<link rel="canonical" href="{url}">'}
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta property="og:type" content="website">
